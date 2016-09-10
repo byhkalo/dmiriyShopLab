@@ -32,22 +32,19 @@ class ShopsManager {
                     postsViewModels.append(shop)
                 }
                 sink.sendNext(postsViewModels)
-                sink.sendCompleted()
+//                sink.sendCompleted()
             })
         }
     }
     
-    func createNewPostTitle(title: String, body: String, user: FIRUser, imageData: NSData?, completionHandler: (isSuccess: Bool) ->()) {
-//        let timeStamp = Double(NSDate.timeIntervalSinceReferenceDate())
-//        
-//        let newPost : [String : AnyObject] = [Constants.kAuthor    : user.displayName as! AnyObject,
-//                                              Constants.kTitle     : title as AnyObject,
-//                                              Constants.kBody      : body as AnyObject,
-//                                              Constants.kTimestamp : NSNumber.init(double: timeStamp) as AnyObject]
-//
-//        self.ref.child("posts").childByAutoId().setValue(newPost) { (error, reference) in
-//            completionHandler(isSuccess: error == nil)
-//        }
-        
+    func createNewShopName(name: String, lastVisitDate: NSDate, lat: Float, lon: Float, planFrequency: Int, completionHandler: (isSuccess: Bool) ->()) {
+        let newShop : [String : AnyObject] = [Constants.Shop.Name  : name,
+                                              Constants.Shop.LastVisitDate : Converter.sringFromDate(lastVisitDate),
+                                              Constants.Shop.Coordinate : ["lat": NSNumber(float: lat), "lon": NSNumber(float: lon)],
+                                              Constants.Shop.PlanFrequency: NSNumber(integer: planFrequency)]
+
+        self.ref.child(Constants.Shops).childByAutoId().setValue(newShop) { (error, reference) in
+            completionHandler(isSuccess: error == nil)
+        } 
     }
 }

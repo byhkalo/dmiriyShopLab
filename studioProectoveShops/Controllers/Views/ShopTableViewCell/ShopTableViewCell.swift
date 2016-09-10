@@ -11,9 +11,7 @@ import UIKit
 class ShopTableViewCell: UITableViewCell {
 
     @IBOutlet weak var shopNameLabel: UILabel!
-    
     @IBOutlet weak var frequencyLabel: UILabel!
-    
     @IBOutlet weak var lastVisitDateLabel: UILabel!
     
     override func awakeFromNib() {

@@ -44,4 +44,13 @@ class ShopModel: NSObject {
         self.planFrequency = planFrequency
         self.orderArray = orderArray
     }
+    
+    func dictionaryPresentationForOrder() -> Dictionary<String, AnyObject> {
+        let shopDictionary : [String : AnyObject] = [Constants.Shop.Identifier: identifier,
+                                                     Constants.Shop.Name  : name,
+                                                     Constants.Shop.LastVisitDate : Converter.sringFromDate(lastVisitDate),
+                                                     Constants.Shop.Coordinate : ["lat": NSNumber(float: lat), "lon": NSNumber(float: lon)],
+                                                     Constants.Shop.PlanFrequency: NSNumber(integer: planFrequency)]
+        return shopDictionary
+    }
 }

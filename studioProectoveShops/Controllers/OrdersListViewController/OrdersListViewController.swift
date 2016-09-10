@@ -1,17 +1,19 @@
 //
-//  ShopsListViewController.swift
+//  OrdersListViewController.swift
 //  studioProectoveShops
 //
-//  Created by Dmitriy Gaponenko on 10.09.16.
+//  Created by Dmitriy Gaponenko on 11.09.16.
 //  Copyright © 2016 Dmitriy Gaponenko. All rights reserved.
 //
 
 import UIKit
+import Foundation
+import ReactiveCocoa
 
-class ShopsListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+class OrdersListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
     @IBOutlet weak var tableView: UITableView!
-    var shopsArray: [ShopModel]?
+    var ordersArray: [OrderModel]?
     
     
     static func controllerFromStoryboard() -> ShopsListViewController {
@@ -23,48 +25,47 @@ class ShopsListViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ShopsManager.sharedInstance.getShops(index: 0, count: 20)
+        OrdersManager.sharedInstance.getOrders(index: 0, count: 20)
             .on(failed: { (error) in
-                print("Get Error from firebase = \(error)")
-                }) { (shopModels) in
-                    self.shopsArray = shopModels
-                    self.tableView.reloadData()
-        }.start()
-        
+                print("(OrdersListViewController) Get Error from firebase = \(error)")
+            }) { (orderModels) in
+                self.ordersArray = orderModels
+                self.tableView.reloadData()
+            }.start()
         
         tableView.delegate = self
         tableView.dataSource = self
     }
-
-//    MARK: - UITableViewDataSource
+    
+    //    MARK: - UITableViewDataSource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return shopsArray?.count ?? 0
+        return ordersArray?.count ?? 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let simpleTableIdentifier = "ShopTableViewCell";
+        let simpleTableIdentifier = "OrderTableViewCell";
         
-        var cell = tableView.dequeueReusableCellWithIdentifier(simpleTableIdentifier) as? ShopTableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier(simpleTableIdentifier) as? OrderTableViewCell
         if (cell == nil) {
             let nib = NSBundle.mainBundle().loadNibNamed(simpleTableIdentifier, owner: self, options: nil)
-            cell = nib.first as? ShopTableViewCell
+            cell = nib.first as? OrderTableViewCell
         }
         
-        cell?.fillByModel(shopsArray![indexPath.row])
+        cell?.fillByModel(ordersArray![indexPath.row])
         
         return cell!
         
     }
     
-//    MARK: - UITableViewDelegate  
+    //    MARK: - UITableViewDelegate
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
     }
     
-//    MARK: - Actions
+    //    MARK: - Actions
     
     @IBAction func backButtonAction(sender: AnyObject) {
         navigationController?.popViewControllerAnimated(true)

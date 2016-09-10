@@ -10,6 +10,8 @@
 
 struct Constants {
     static let Shops = "shops"
+    static let Orders = "orders"
+    static let Products = "products"
     
     struct Shop {
         static let Name = "name"
@@ -18,6 +20,21 @@ struct Constants {
         static let LastVisitDate = "lastVisitDate"
         static let Orders = "orders"
         static let PlanFrequency = "planFrequency"
+    }
+    
+    struct Order {
+        static let Identifier = "identifier"
+        static let ShopModel = "shopModel"
+        static let DeliveryDate = "deliveryDate"
+        static let OrderElementArray = "orderElementArray"
+    }
+    
+    struct Product {
+        static let Name = "name"
+        static let Identifier = "identifier"
+        static let Price = "price"
+        static let Description = "description"
+        static let InStorage = "inStorage"
     }
     
     struct Cell {

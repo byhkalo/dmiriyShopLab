@@ -58,11 +58,15 @@ class RouterManager {
     
     //MARK: - Show Alerts
     
+    func displayAlertController(alertController: UIAlertController) {
+        navigationController.topViewController!.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     func displayAlertTitle(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
         alertController.addAction(action)
-        navigationController.topViewController!.presentViewController(alertController, animated: true, completion: nil)
+        displayAlertController(alertController)
     }
 
 }

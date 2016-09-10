@@ -12,10 +12,8 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.setHidesBackButton(true, animated: true)
-//        self.navigationController!.navigationItem.leftBarButtonItem = UIBarButtonItem()
-//        self.navigationItem.leftBarButtonItem = nil
-        // Do any additional setup after loading the view, typically from a nib.
+        let locationManager = LocationManager.sharedInstance.locationManager
+        print("location manager = \(locationManager)")
     }
 
     override func didReceiveMemoryWarning() {
