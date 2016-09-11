@@ -16,9 +16,9 @@ class OrdersListViewController: UIViewController, UITableViewDataSource, UITable
     var ordersArray: [OrderModel]?
     
     
-    static func controllerFromStoryboard() -> ShopsListViewController {
+    static func controllerFromStoryboard() -> OrdersListViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewControllerWithIdentifier(String(ShopsListViewController)) as! ShopsListViewController
+        let controller = storyboard.instantiateViewControllerWithIdentifier(String(OrdersListViewController)) as! OrdersListViewController
         return controller
     }
     
@@ -71,7 +71,7 @@ class OrdersListViewController: UIViewController, UITableViewDataSource, UITable
         navigationController?.popViewControllerAnimated(true)
     }
     
-    @IBAction func addShopButtonAction(sender: AnyObject) {
-        navigationController?.pushViewController(CreateShopViewController.controllerFromStoryboard(), animated: true)
+    @IBAction func addOrderButtonAction(sender: AnyObject) {
+        navigationController?.pushViewController(CreateOrderViewController.controllerFromStoryboard(), animated: true)
     }
 }

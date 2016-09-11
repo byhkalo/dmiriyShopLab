@@ -17,7 +17,7 @@ class ShopModel: NSObject {
     let lat: Float
     let lon: Float
     let planFrequency: Int
-    let orderArray: Dictionary<String, String>?
+    let orderArray: Array<Dictionary<String, NSNumber>>?
     
     convenience init(model: Dictionary<String, AnyObject>) {
         let coordinate = model[Constants.Shop.Coordinate] as! NSDictionary
@@ -27,7 +27,7 @@ class ShopModel: NSObject {
                   lat: (coordinate["lat"]! as! NSNumber).floatValue,
                   lon: (coordinate["lon"]! as! NSNumber).floatValue,
                   planFrequency: (model[Constants.Shop.PlanFrequency]! as! NSNumber).integerValue,
-                  orderArray: model[Constants.Shop.Orders] as? Dictionary<String, String>)
+                  orderArray: model[Constants.Shop.Orders] as? Array<Dictionary<String, NSNumber>>)
     }
     convenience init(snapshot: FIRDataSnapshot) {
         var value = snapshot.value! as! Dictionary<String, AnyObject>
@@ -35,7 +35,7 @@ class ShopModel: NSObject {
         self.init(model: value)
     }
     
-    init(name:String, identifier: String, lastVisitDate: NSDate, lat: Float, lon: Float, planFrequency: Int, orderArray: Dictionary<String, String>?) {
+    init(name:String, identifier: String, lastVisitDate: NSDate, lat: Float, lon: Float, planFrequency: Int, orderArray: Array<Dictionary<String, NSNumber>>?) {
         self.name = name
         self.identifier = identifier
         self.lastVisitDate = lastVisitDate

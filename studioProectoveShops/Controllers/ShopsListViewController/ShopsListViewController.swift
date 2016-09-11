@@ -45,7 +45,6 @@ class ShopsListViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let simpleTableIdentifier = "ShopTableViewCell";
-        
         var cell = tableView.dequeueReusableCellWithIdentifier(simpleTableIdentifier) as? ShopTableViewCell
         if (cell == nil) {
             let nib = NSBundle.mainBundle().loadNibNamed(simpleTableIdentifier, owner: self, options: nil)
@@ -55,7 +54,6 @@ class ShopsListViewController: UIViewController, UITableViewDataSource, UITableV
         cell?.fillByModel(shopsArray![indexPath.row])
         
         return cell!
-        
     }
     
 //    MARK: - UITableViewDelegate  

@@ -37,6 +37,24 @@ class ShopsManager {
         }
     }
     
+    func getShopsByName(name: String) -> SignalProducer <Array<ShopModel>, NSError> {
+        return SignalProducer { (sink, disposable) -> () in
+            self.ref.child(Constants.Shops)
+                .queryOrderedByChild(Constants.Shop.Name)
+                .queryStartingAtValue(name).observeEventType(FIRDataEventType.Value,
+                    withBlock: { (snapshot) in
+                        var postsViewModels = [ShopModel]()
+                        
+                        for list in snapshot.children {
+                            let shop = ShopModel.init(snapshot: list as! FIRDataSnapshot)
+                            postsViewModels.append(shop)
+                        }
+                        sink.sendNext(postsViewModels)
+                        sink.sendCompleted()
+                })
+        }
+    }
+    
     func createNewShopName(name: String, lastVisitDate: NSDate, lat: Float, lon: Float, planFrequency: Int, completionHandler: (isSuccess: Bool) ->()) {
         let newShop : [String : AnyObject] = [Constants.Shop.Name  : name,
                                               Constants.Shop.LastVisitDate : Converter.sringFromDate(lastVisitDate),

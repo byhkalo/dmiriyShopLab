@@ -28,6 +28,7 @@ class ViewController: UIViewController {
     
     @IBAction func orderListButtonAction(sender: AnyObject) {
         print("orderListButtonAction")
+        navigationController?.pushViewController(OrdersListViewController.controllerFromStoryboard(), animated: true)
     }
     
     @IBAction func shopsListButtonAction(sender: AnyObject) {

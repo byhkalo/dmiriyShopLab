@@ -25,7 +25,7 @@ class OrderModel: NSObject {
     
     convenience init(snapshot: FIRDataSnapshot) {
         var value = snapshot.value! as! Dictionary<String, AnyObject>
-        value[Constants.Shop.Identifier] = snapshot.key
+        value[Constants.Order.Identifier] = snapshot.key
         self.init(model: value)
     }
     

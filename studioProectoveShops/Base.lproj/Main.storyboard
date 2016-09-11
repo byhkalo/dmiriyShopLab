@@ -408,7 +408,7 @@
         <!--Orders List View Controller-->
         <scene sceneID="y8p-9O-UQn">
             <objects>
-                <viewController storyboardIdentifier="ShopsListViewController" id="Ddu-Z2-1gQ" customClass="OrdersListViewController" customModule="studioProectoveShops" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OrdersListViewController" id="Ddu-Z2-1gQ" customClass="OrdersListViewController" customModule="studioProectoveShops" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ddP-gT-P7Z"/>
                         <viewControllerLayoutGuide type="bottom" id="LB1-fo-1u2"/>
@@ -428,7 +428,7 @@
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="chN-x7-xnG">
                                             <connections>
-                                                <action selector="addShopButtonAction:" destination="Ddu-Z2-1gQ" id="GqH-X7-ECg"/>
+                                                <action selector="addOrderButtonAction:" destination="Ddu-Z2-1gQ" id="cxu-AG-010"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -477,7 +477,7 @@
                                     <navigationItem title="Create Order" id="3ti-gm-uKj">
                                         <barButtonItem key="leftBarButtonItem" style="plain" systemItem="reply" id="OXs-Md-DN3">
                                             <connections>
-                                                <action selector="backButtonAction:" destination="Ddu-Z2-1gQ" id="e3S-pI-oKs"/>
+                                                <action selector="backButtonAction:" destination="pp9-lz-UiU" id="alo-nZ-zSi"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -675,6 +675,170 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eSh-ac-znn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1707.5" y="-85.5"/>
+        </scene>
+        <!--Select Shop View Controller-->
+        <scene sceneID="oVN-hC-yZ6">
+            <objects>
+                <viewController storyboardIdentifier="SelectShopViewController" id="Lak-TS-eXL" customClass="SelectShopViewController" customModule="studioProectoveShops" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2H8-1h-duO"/>
+                        <viewControllerLayoutGuide type="bottom" id="xU8-lz-mwb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NlT-sz-Q3x">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mmW-1V-3n1">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="Select Shop" id="ltG-Nf-ob1">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="b7M-ZG-3nN">
+                                            <connections>
+                                                <action selector="backButtonAction:" destination="Lak-TS-eXL" id="Dw8-9t-gBr"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <searchBar contentMode="redraw" placeholder="Shop Name" translatesAutoresizingMaskIntoConstraints="NO" id="M7g-xk-0gb">
+                                <rect key="frame" x="0.0" y="64" width="375" height="44"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x8U-eO-AG2">
+                                <rect key="frame" x="123" y="594" width="128" height="47"/>
+                                <color key="backgroundColor" red="0.31408888610000002" green="0.64999581959999997" blue="0.7912554825" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="128" id="bKU-b4-d2o"/>
+                                    <constraint firstAttribute="height" constant="47" id="pGk-6m-nBL"/>
+                                </constraints>
+                                <state key="normal" title="Select Shop">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="clipToBounds" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="createOrderAction:" destination="pp9-lz-UiU" eventType="touchUpInside" id="0sD-tL-gWJ"/>
+                                    <action selector="selectShopAction:" destination="Lak-TS-eXL" eventType="touchUpInside" id="ivV-Ms-4tX"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YCf-0G-TAv">
+                                <rect key="frame" x="0.0" y="108" width="375" height="457"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="457" id="8yU-mf-SsO"/>
+                                </constraints>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="mmW-1V-3n1" secondAttribute="trailing" id="0Oa-LN-o7q"/>
+                            <constraint firstAttribute="trailing" secondItem="YCf-0G-TAv" secondAttribute="trailing" id="1AS-fo-Ghx"/>
+                            <constraint firstItem="YCf-0G-TAv" firstAttribute="top" secondItem="M7g-xk-0gb" secondAttribute="bottom" id="7xB-bc-jW2"/>
+                            <constraint firstItem="x8U-eO-AG2" firstAttribute="centerX" secondItem="NlT-sz-Q3x" secondAttribute="centerX" id="9YS-0p-Unf"/>
+                            <constraint firstItem="M7g-xk-0gb" firstAttribute="top" secondItem="mmW-1V-3n1" secondAttribute="bottom" id="HAg-32-Tg5"/>
+                            <constraint firstAttribute="trailing" secondItem="M7g-xk-0gb" secondAttribute="trailing" id="Jcs-1C-GM9"/>
+                            <constraint firstItem="mmW-1V-3n1" firstAttribute="top" secondItem="2H8-1h-duO" secondAttribute="bottom" id="bXy-dM-xTt"/>
+                            <constraint firstItem="M7g-xk-0gb" firstAttribute="leading" secondItem="NlT-sz-Q3x" secondAttribute="leading" id="jW8-UQ-fnI"/>
+                            <constraint firstItem="YCf-0G-TAv" firstAttribute="leading" secondItem="NlT-sz-Q3x" secondAttribute="leading" id="loR-uW-bzS"/>
+                            <constraint firstItem="x8U-eO-AG2" firstAttribute="top" secondItem="YCf-0G-TAv" secondAttribute="bottom" constant="29" id="q98-e1-z34"/>
+                            <constraint firstItem="mmW-1V-3n1" firstAttribute="leading" secondItem="NlT-sz-Q3x" secondAttribute="leading" id="xrk-Ou-KFr"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="searchBar" destination="M7g-xk-0gb" id="H80-96-QuK"/>
+                        <outlet property="tableView" destination="YCf-0G-TAv" id="uXR-wz-Eif"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zpA-ci-w8H" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2102.5" y="-85.5"/>
+        </scene>
+        <!--Select Product View Controller-->
+        <scene sceneID="0dy-jE-CZt">
+            <objects>
+                <viewController storyboardIdentifier="SelectProductViewController" id="ZAU-Do-VCL" customClass="SelectProductViewController" customModule="studioProectoveShops" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="58B-Sd-huR"/>
+                        <viewControllerLayoutGuide type="bottom" id="caj-9Q-RRb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="eLh-Na-gHt">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GFm-q4-Vzm">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="Select Product" id="tF5-EN-C9m">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="mKq-GU-jgV">
+                                            <connections>
+                                                <action selector="backButtonAction:" destination="ZAU-Do-VCL" id="9dA-1Z-m5A"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <searchBar contentMode="redraw" text="" placeholder="Product Name" translatesAutoresizingMaskIntoConstraints="NO" id="Lth-N3-znf">
+                                <rect key="frame" x="0.0" y="64" width="375" height="44"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="76a-55-HS3">
+                                <rect key="frame" x="123" y="594" width="128" height="47"/>
+                                <color key="backgroundColor" red="0.31408888610000002" green="0.64999581959999997" blue="0.7912554825" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="47" id="dkn-FL-ZNB"/>
+                                    <constraint firstAttribute="width" constant="128" id="uOk-la-8zx"/>
+                                </constraints>
+                                <state key="normal" title="Select Products">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="clipToBounds" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="createOrderAction:" destination="pp9-lz-UiU" eventType="touchUpInside" id="as1-eI-eg2"/>
+                                    <action selector="selectProductsAction:" destination="ZAU-Do-VCL" eventType="touchUpInside" id="yv8-CI-njD"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="101" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bxo-Eh-UW3">
+                                <rect key="frame" x="0.0" y="108" width="375" height="457"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="457" id="Hj2-ym-V5d"/>
+                                </constraints>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="bxo-Eh-UW3" firstAttribute="top" secondItem="Lth-N3-znf" secondAttribute="bottom" id="3R3-4h-eOJ"/>
+                            <constraint firstItem="Lth-N3-znf" firstAttribute="leading" secondItem="eLh-Na-gHt" secondAttribute="leading" id="3fi-EV-eNC"/>
+                            <constraint firstAttribute="trailing" secondItem="GFm-q4-Vzm" secondAttribute="trailing" id="5OM-td-NY7"/>
+                            <constraint firstItem="76a-55-HS3" firstAttribute="top" secondItem="bxo-Eh-UW3" secondAttribute="bottom" constant="29" id="6SY-sh-vk1"/>
+                            <constraint firstItem="GFm-q4-Vzm" firstAttribute="leading" secondItem="eLh-Na-gHt" secondAttribute="leading" id="PlU-Mt-VyK"/>
+                            <constraint firstItem="Lth-N3-znf" firstAttribute="top" secondItem="GFm-q4-Vzm" secondAttribute="bottom" id="YJ2-1x-0gN"/>
+                            <constraint firstItem="bxo-Eh-UW3" firstAttribute="leading" secondItem="eLh-Na-gHt" secondAttribute="leading" id="aue-I8-5bA"/>
+                            <constraint firstItem="GFm-q4-Vzm" firstAttribute="top" secondItem="58B-Sd-huR" secondAttribute="bottom" id="hvl-ve-hgs"/>
+                            <constraint firstAttribute="trailing" secondItem="bxo-Eh-UW3" secondAttribute="trailing" id="k5b-zG-ZGP"/>
+                            <constraint firstAttribute="trailing" secondItem="Lth-N3-znf" secondAttribute="trailing" id="xmJ-Bc-uJK"/>
+                            <constraint firstItem="76a-55-HS3" firstAttribute="centerX" secondItem="eLh-Na-gHt" secondAttribute="centerX" id="yBH-x8-RaO"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="searchBar" destination="Lth-N3-znf" id="CfE-JL-we5"/>
+                        <outlet property="tableView" destination="bxo-Eh-UW3" id="Gyu-qD-5yv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e8w-Bi-UmN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2499.5" y="-85.5"/>
         </scene>
     </scenes>
 </document>
