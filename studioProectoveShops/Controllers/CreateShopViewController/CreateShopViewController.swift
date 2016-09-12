@@ -72,7 +72,11 @@ class CreateShopViewController: UIViewController, UIPickerViewDataSource, UIPick
         print("tryToGetLocationFromAddress")
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(addressTextField.text!) { (placemarks, error) in
-            for (_, placemark) in placemarks!.enumerate() {
+            guard let placemarks = placemarks else {
+                router().displayAlertTitle("Sorry", message: "We can't find address")
+                return
+            }
+            for (_, placemark) in placemarks.enumerate() {
                 let lat = String(placemark.location!.coordinate.latitude)
                 let lon = String(placemark.location!.coordinate.longitude)
                 self.shopLocation = placemark.location

@@ -47,6 +47,7 @@ class CreateOrderViewController: UIViewController, UITableViewDataSource, UITabl
 
         productsTableView.delegate = self
         productsTableView.dataSource = self
+        deliveryDatePicker.date = NSDate().dateByAddingTimeInterval(24 * 60 * 60) // set next date
     }
 
     func updateProductTableView() {
@@ -79,15 +80,16 @@ class CreateOrderViewController: UIViewController, UITableViewDataSource, UITabl
         var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)
         
         if cell == nil {
-            cell = UITableViewCell(style: .Default, reuseIdentifier: cellIdentifier)
+            cell = UITableViewCell(style: .Value1, reuseIdentifier: cellIdentifier)
         }
         
         let model = productsModelsArray[indexPath.row]
         
         cell?.textLabel?.text = model.name
-        cell?.detailTextLabel?.text = String(productsOrderDictionary![model.identifier]?.integerValue)
+        let value = productsOrderDictionary![model.identifier]?.integerValue
+        cell?.detailTextLabel?.text = String(value ?? 0)
         
-        return UITableViewCell()
+        return cell!
     }
     
 //    MARK: - UITableViewDelegate

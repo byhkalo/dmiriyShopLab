@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let blogTabBarController = storyboard.instantiateViewControllerWithIdentifier(String(ViewController))
         
-        try! FIRAuth.auth()!.signOut()
+//        try! FIRAuth.auth()!.signOut()
         
         let rootController = FIRAuth.auth()?.currentUser == nil ? SignInViewController() : blogTabBarController
         let navController = UINavigationController.init(rootViewController: rootController)

@@ -62,23 +62,23 @@ class ProductTableViewCell: UITableViewCell, UITextFieldDelegate {
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool  {
         var txtAfterUpdate = textField.text! as NSString
         txtAfterUpdate = txtAfterUpdate.stringByReplacingCharactersInRange(range, withString: string)
-        return (Int(txtAfterUpdate as String) != nil) ? true : false
+        let stringValue = String(txtAfterUpdate)
+        return (Int(stringValue) != nil) || stringValue.characters.count == 0 ? true : false
     }
     
 //    MARK: - Events
     
     func finishEditing() {
         if let stateChangedBlock = stateChangedBlock {
-            stateChangedBlock(isSelected: checkBoxButton.selected, selectedCount: Int(countGetTextField.text!)!)
+            stateChangedBlock(isSelected: checkBoxButton.selected, selectedCount: Int(countGetTextField.text ?? "0") ?? 0)
         }
         countGetTextField.resignFirstResponder()
     }
     
     func setSelectedCell(selected: Bool) -> () {
         checkBoxButton.selected = selected
-        checkBoxButton.titleLabel?.text = checkBoxButton.selected ? "YES" : "NO"
         if let stateChangedBlock = stateChangedBlock {
-            stateChangedBlock(isSelected: selected, selectedCount: Int(countGetTextField.text!)!)
+            stateChangedBlock(isSelected: selected, selectedCount: Int(countGetTextField.text ?? "0") ?? 0)
         }
     }
     

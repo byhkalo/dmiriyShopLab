@@ -88,7 +88,11 @@ class SelectProductViewController: UIViewController, UITableViewDataSource, UITa
         
         cell!.stateChangedBlock = {(isSelected, selectedCount) -> () in
             if isSelected {
-                self.currentOrder[(cell?.productModel.identifier)!] = NSNumber(integer: selectedCount)
+                if selectedCount > 0 {
+                    self.currentOrder[(cell?.productModel.identifier)!] = NSNumber(integer: selectedCount)
+                } else {
+                    self.currentOrder.removeValueForKey((cell?.productModel.identifier)!)
+                }
             } else {
                 self.currentOrder.removeValueForKey((cell?.productModel.identifier)!)
             }
