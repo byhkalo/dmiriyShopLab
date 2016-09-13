@@ -13,6 +13,7 @@ class CreateOrderViewController: UIViewController, UITableViewDataSource, UITabl
     @IBOutlet weak var shopNameLabel: UILabel!
     @IBOutlet weak var shopLastVisitDateLabel: UILabel!
     @IBOutlet weak var shopPlanFrequancyLabel: UILabel!
+    @IBOutlet weak var totalPriceLabel: UILabel!
     @IBOutlet weak var productsTableView: UITableView!
     @IBOutlet weak var deliveryDatePicker: UIDatePicker!
     
@@ -27,6 +28,11 @@ class CreateOrderViewController: UIViewController, UITableViewDataSource, UITabl
     }
 
     var productsModelsArray: Array<ProductModel>!
+    var totalPrice: Float = 0 {
+        didSet {
+            totalPriceLabel.text = String(totalPrice)
+        }
+    }
     
     var productsOrderDictionary: Dictionary<String, NSNumber>? {
         didSet {
@@ -56,14 +62,18 @@ class CreateOrderViewController: UIViewController, UITableViewDataSource, UITabl
                 print("(CreateOrderViewController) Get Error from firebase = \(error)")
                 }, next: { (productsModels) in
                     var helpModelsArray = [ProductModel]()
+                    var totalPrice: Float = 0
                     for model in productsModels {
-                        if (self.productsOrderDictionary![model.identifier] != nil) {
+                        if let count = self.productsOrderDictionary![model.identifier] {
                             helpModelsArray.append(model)
+                            let countProduct = count.floatValue
+                            totalPrice += (countProduct * model.price)
                         }
                     }
                     
                     self.productsModelsArray = helpModelsArray
-                    dispatch_async(dispatch_get_main_queue(), { 
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.totalPrice = totalPrice
                         self.productsTableView.reloadData()
                     })
             }).start()
@@ -138,6 +148,52 @@ class CreateOrderViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     @IBAction func createOrderAction(sender: AnyObject) {
+        
+        guard let shopModel = shopModel, let productsOrderDictionary = productsOrderDictionary else {
+            router().displayAlertTitle("Sorry", message: "Please, Check your order")
+            return
+        }
+        
+        OrdersManager.sharedInstance
+            .createNewOrderShopIdentifier(shopModel,
+                                          deliveryDate: deliveryDatePicker.date,
+                                          createDate: NSDate(),
+                                          totalPrice: totalPrice,
+                                          productArray: productsOrderDictionary) { (isSuccess) in
+                                            
+                                            ShopsManager.sharedInstance.insertOrderToShopId(shopModel.identifier, newOrderValue: productsOrderDictionary)
+                                                .on(failed: { (error) in
+                                                    print("Fucking Eror from FireBase")
+                                                }, next: { (isSuccess) in
+                                                    if isSuccess {
+                                                        print("Maybe success from FireBase")
+                                                    } else {
+                                                        print("Maybe NOT successfully from FireBase")
+                                                    }
+                                            }).start()
+                                            
+                                            for productModel in self.productsModelsArray {
+                                                let oldStorageCount = productModel.inStorage
+                                                let orderCount = (self.productsOrderDictionary![productModel.identifier])?.integerValue
+                                                let newValue = oldStorageCount - orderCount!
+                                                
+                                                ProductsManager.sharedInstance
+                                                    .changeInStorageCountByProductId(productModel.identifier, newValue: newValue)
+                                                    .on(failed: { (error) in
+                                                        print("Fucking Eror from FireBase")
+                                                        }, next: { (isSuccess) in
+                                                            if isSuccess {
+                                                                print("Maybe success from FireBase")
+                                                            } else {
+                                                                print("Maybe NOT successfully from FireBase")
+                                                            }
+                                                    }).start()
+                                            }
+                                            dispatch_async(dispatch_get_main_queue(), {
+                                                self.navigationController?.popViewControllerAnimated(true)
+                                                router().displayAlertTitle("Success", message: "Order has been placed successfully")
+                                            })
+        }
         
         print("createOrderAction")
     }

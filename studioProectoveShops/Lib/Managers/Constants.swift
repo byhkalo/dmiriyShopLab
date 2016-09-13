@@ -26,7 +26,9 @@ struct Constants {
         static let Identifier = "identifier"
         static let ShopModel = "shopModel"
         static let DeliveryDate = "deliveryDate"
+        static let CreateDate = "createDate"
         static let OrderElementArray = "orderElementArray"
+        static let TotalPrice = "totalPrice"
     }
     
     struct Product {

@@ -37,9 +37,11 @@ class OrdersManager {
         }
     }
     
-    func createNewOrderShopIdentifier(shopModel: ShopModel, deliveryDate: NSDate, productArray: Array<Dictionary<String, NSNumber>>, completionHandler: (isSuccess: Bool) ->()) {
+    func createNewOrderShopIdentifier(shopModel: ShopModel, deliveryDate: NSDate, createDate: NSDate, totalPrice: Float, productArray: Dictionary<String, NSNumber>, completionHandler: (isSuccess: Bool) ->()) {
         let newOrder : [String : AnyObject] = [Constants.Order.ShopModel : shopModel.dictionaryPresentationForOrder(),
                                               Constants.Order.DeliveryDate : Converter.sringFromDate(deliveryDate),
+                                              Constants.Order.CreateDate : Converter.sringFromDate(createDate),
+                                              Constants.Order.TotalPrice : NSNumber(float: totalPrice),
                                               Constants.Order.OrderElementArray : productArray]
         
         self.ref.child(Constants.Orders).childByAutoId().setValue(newOrder) { (error, reference) in

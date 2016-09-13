@@ -59,7 +59,13 @@ class ShopsListViewController: UIViewController, UITableViewDataSource, UITableV
 //    MARK: - UITableViewDelegate  
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
+        
+        let showShopController = ShopLocationViewController.controllerFromStoryboard()
+        showShopController.shopModel = shopsArray![indexPath.row]
+        
+        navigationController?.pushViewController(showShopController, animated: true)
     }
     
 //    MARK: - Actions

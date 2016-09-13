@@ -65,4 +65,19 @@ class ShopsManager {
             completionHandler(isSuccess: error == nil)
         } 
     }
+    
+    func insertOrderToShopId(shopId: String, newOrderValue: Dictionary<String, NSNumber>) -> SignalProducer <Bool, NSError> {
+        return SignalProducer { (sink, disposable) -> () in
+            self.ref.child(Constants.Shops).child(shopId).child(Constants.Shop.Orders).childByAutoId()
+                .setValue(newOrderValue, withCompletionBlock: { (error, databaseRef) in
+                    if  let error = error {
+                        sink.sendFailed(error)
+                    } else {
+                        sink.sendNext(true)
+                        sink.sendCompleted()
+                    }
+                })
+        }
+    }
+    
 }

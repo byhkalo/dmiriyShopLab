@@ -20,6 +20,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     var updateTimer: NSTimer?
     var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
     var currentLocation: CLLocation?
+    var secondDelegate: CLLocationManagerDelegate?
     
     override init() {
         super.init()
@@ -82,6 +83,9 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         currentLocation = locations.last
+        if let secondDelegate = secondDelegate {
+            secondDelegate.locationManager!(manager, didUpdateLocations: locations)
+        }
     }
     
     func locationManagerAlert() {

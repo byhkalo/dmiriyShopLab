@@ -29,7 +29,7 @@ class OrdersListViewController: UIViewController, UITableViewDataSource, UITable
             .on(failed: { (error) in
                 print("(OrdersListViewController) Get Error from firebase = \(error)")
             }) { (orderModels) in
-                self.ordersArray = orderModels
+                self.ordersArray = self.sortedOrdersArrayByCreateDate(orderModels)
                 self.tableView.reloadData()
             }.start()
         
@@ -63,6 +63,19 @@ class OrdersListViewController: UIViewController, UITableViewDataSource, UITable
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+    }
+    
+    //    MARK: - Sort func
+    
+    func sortedOrdersArrayByCreateDate(ordersArray: [OrderModel]) -> [OrderModel] {
+        
+        var sortOrders = ordersArray
+        
+        sortOrders.sortInPlace { (firstOrder, secondOrder) -> Bool in
+            return firstOrder.createDate.compare(secondOrder.createDate) == NSComparisonResult.OrderedDescending
+        }
+        
+        return sortOrders
     }
     
     //    MARK: - Actions

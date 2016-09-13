@@ -13,7 +13,7 @@ class OrderTableViewCell: UITableViewCell {
     @IBOutlet weak var orderIdentifierLabel: UILabel!
     @IBOutlet weak var shopNameLabel: UILabel!
     @IBOutlet weak var deliveryDateLabel: UILabel!
-    @IBOutlet weak var productCountLabel: UILabel!
+    @IBOutlet weak var totalPriceLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,7 +29,7 @@ class OrderTableViewCell: UITableViewCell {
     func fillByModel(model: OrderModel) {
         orderIdentifierLabel.text = model.identifier
         shopNameLabel.text = model.shopModel.name
+        totalPriceLabel.text = String(Float(model.totalPrice ?? 0.0))
         deliveryDateLabel.text = Converter.prettySringFromDate(model.deliveryDate)
-        productCountLabel.text = String(model.productArray?.count)
     }
 }

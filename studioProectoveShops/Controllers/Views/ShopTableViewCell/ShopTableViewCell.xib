@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -44,7 +44,7 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VTc-sK-6Kf">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VTc-sK-6Kf">
                         <rect key="frame" x="139" y="39" width="93" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="93" id="gPZ-Iw-RYe"/>
@@ -64,26 +64,6 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w1E-oT-48K">
-                        <rect key="frame" x="240" y="31" width="72" height="37"/>
-                        <color key="backgroundColor" red="0.31408888606238744" green="0.64999581963564057" blue="0.7912554825" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="37" id="Ekn-7K-VaX"/>
-                            <constraint firstAttribute="width" constant="72" id="jix-X0-STb"/>
-                        </constraints>
-                        <state key="normal" title="Location">
-                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="clipToBounds" value="YES"/>
-                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                <integer key="value" value="5"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
-                        <connections>
-                            <action selector="locationButtonAction:" destination="fMj-XX-IJb" eventType="touchUpInside" id="yxl-wv-p9n"/>
-                        </connections>
-                    </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016.05.04" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Grh-UR-xrs">
                         <rect key="frame" x="131" y="70" width="101" height="21"/>
                         <constraints>
@@ -96,11 +76,9 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="w1E-oT-48K" firstAttribute="centerY" secondItem="G68-wf-2NM" secondAttribute="centerY" id="AwK-V4-cuC"/>
                     <constraint firstItem="cH8-Wf-oU1" firstAttribute="leading" secondItem="G68-wf-2NM" secondAttribute="leading" constant="8" id="GHX-BZ-3A2"/>
-                    <constraint firstItem="w1E-oT-48K" firstAttribute="leading" secondItem="VTc-sK-6Kf" secondAttribute="trailing" constant="8" id="GJb-E0-8EB"/>
                     <constraint firstItem="JBT-Wn-ll6" firstAttribute="centerY" secondItem="G68-wf-2NM" secondAttribute="centerY" id="KA6-j3-9Su"/>
-                    <constraint firstAttribute="trailing" secondItem="w1E-oT-48K" secondAttribute="trailing" constant="8" id="LcU-KB-Cax"/>
+                    <constraint firstItem="VTc-sK-6Kf" firstAttribute="leading" secondItem="JBT-Wn-ll6" secondAttribute="trailing" constant="8" id="LgO-fq-y0A"/>
                     <constraint firstAttribute="bottom" secondItem="Grh-UR-xrs" secondAttribute="bottom" constant="8" id="UPd-jD-1Qg"/>
                     <constraint firstItem="DGU-Lz-hJ1" firstAttribute="leading" secondItem="G68-wf-2NM" secondAttribute="leading" constant="8" id="WhV-8p-Nia"/>
                     <constraint firstItem="DGU-Lz-hJ1" firstAttribute="top" secondItem="G68-wf-2NM" secondAttribute="top" constant="10" id="bKU-qg-zwj"/>

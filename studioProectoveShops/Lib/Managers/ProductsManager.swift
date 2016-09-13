@@ -55,4 +55,20 @@ class ProductsManager {
         }
     }
     
+    func changeInStorageCountByProductId(productId: String, newValue: Int) -> SignalProducer <Bool, NSError> {
+        return SignalProducer { (sink, disposable) -> () in
+            let updatedDict = [Constants.Product.InStorage : NSNumber(integer: newValue)]
+            
+            self.ref.child(Constants.Products).child(productId)
+                .updateChildValues(updatedDict, withCompletionBlock: { (error, baseReference) in
+                    if let error = error {
+                        sink.sendFailed(error)
+                    } else {
+                        sink.sendNext(true)
+                        sink.sendCompleted()
+                    }
+                })
+        }
+    }
+    
 }

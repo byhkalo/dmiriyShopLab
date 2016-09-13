@@ -91,6 +91,12 @@ struct Converter {
         return dateFormatter.dateFromString(string)
     }
     
+    static func dateFromDayString(string: String) -> NSDate? {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.dateFromString(string)
+    }
+    
     static func dateWithParams(hours: Int, minutes: Int, seconds: Int, byDay: NSDate) -> NSDate? {
         
         let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian);

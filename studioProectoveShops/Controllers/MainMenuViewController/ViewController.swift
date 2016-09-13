@@ -24,6 +24,7 @@ class ViewController: UIViewController {
     
     @IBAction func mapButtonAction(sender: AnyObject) {
         print("mapButtonAction")
+        navigationController?.pushViewController(TaskTodayViewController.controllerFromStoryboard(), animated: true)
     }
     
     @IBAction func orderListButtonAction(sender: AnyObject) {

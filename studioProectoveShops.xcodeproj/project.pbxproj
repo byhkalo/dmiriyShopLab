@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2AADD5041D87620D00356883 /* TaskTodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AADD5031D87620D00356883 /* TaskTodayViewController.swift */; };
+		2AADD5071D87719C00356883 /* ShopMapTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AADD5061D87719C00356883 /* ShopMapTableViewCell.swift */; };
+		2AADD5091D8771AC00356883 /* ShopMapTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2AADD5081D8771AC00356883 /* ShopMapTableViewCell.xib */; };
+		2AADD50B1D8776B200356883 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AADD50A1D8776B200356883 /* MapViewController.swift */; };
+		2AADD50E1D87828200356883 /* ShopLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AADD50D1D87828200356883 /* ShopLocationViewController.swift */; };
 		2C0F39A51D835E35004F0273 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0F39851D835E35004F0273 /* ViewController.swift */; };
 		2C0F39A61D835E35004F0273 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0F39881D835E35004F0273 /* SignInView.swift */; };
 		2C0F39A71D835E35004F0273 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0F39891D835E35004F0273 /* SignInViewController.swift */; };
@@ -53,6 +58,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2AADD5031D87620D00356883 /* TaskTodayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTodayViewController.swift; sourceTree = "<group>"; };
+		2AADD5061D87719C00356883 /* ShopMapTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopMapTableViewCell.swift; sourceTree = "<group>"; };
+		2AADD5081D8771AC00356883 /* ShopMapTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShopMapTableViewCell.xib; sourceTree = "<group>"; };
+		2AADD50A1D8776B200356883 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		2AADD50D1D87828200356883 /* ShopLocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShopLocationViewController.swift; sourceTree = "<group>"; };
 		2C0F39851D835E35004F0273 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2C0F39881D835E35004F0273 /* SignInView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		2C0F39891D835E35004F0273 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
@@ -125,16 +135,51 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		2AADD5011D8761D500356883 /* MapViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2AADD50A1D8776B200356883 /* MapViewController.swift */,
+			);
+			path = MapViewController;
+			sourceTree = "<group>";
+		};
+		2AADD5021D8761D500356883 /* TaskTodayViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2AADD5031D87620D00356883 /* TaskTodayViewController.swift */,
+			);
+			path = TaskTodayViewController;
+			sourceTree = "<group>";
+		};
+		2AADD5051D87717A00356883 /* ShopMapTableCell */ = {
+			isa = PBXGroup;
+			children = (
+				2AADD5061D87719C00356883 /* ShopMapTableViewCell.swift */,
+				2AADD5081D8771AC00356883 /* ShopMapTableViewCell.xib */,
+			);
+			path = ShopMapTableCell;
+			sourceTree = "<group>";
+		};
+		2AADD50C1D87827200356883 /* ShopLocationViewController */ = {
+			isa = PBXGroup;
+			children = (
+				2AADD50D1D87828200356883 /* ShopLocationViewController.swift */,
+			);
+			path = ShopLocationViewController;
+			sourceTree = "<group>";
+		};
 		2C0F39831D835E35004F0273 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				2C11BD431D8457FB004B8137 /* MapViewController */,
+				2AADD5011D8761D500356883 /* MapViewController */,
+				2AADD5021D8761D500356883 /* TaskTodayViewController */,
 				2C11BD411D8457FB004B8137 /* CreateOrderViewController */,
 				2C11BD651D84D31D004B8137 /* SelectShopViewController */,
 				2C11BD641D84D31D004B8137 /* SelectProductViewController */,
 				2C11BD421D8457FB004B8137 /* CreateShopViewController */,
 				2C11BD441D8457FB004B8137 /* OrdersListViewController */,
 				2C11BD451D8457FB004B8137 /* ShopsListViewController */,
+				2AADD50C1D87827200356883 /* ShopLocationViewController */,
 				2C0F39841D835E35004F0273 /* MainMenuViewController */,
 				2C0F39861D835E35004F0273 /* SignInViewController */,
 				2C0F398C1D835E35004F0273 /* SignUpViewController */,
@@ -276,13 +321,6 @@
 			path = CreateShopViewController;
 			sourceTree = "<group>";
 		};
-		2C11BD431D8457FB004B8137 /* MapViewController */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = MapViewController;
-			sourceTree = "<group>";
-		};
 		2C11BD441D8457FB004B8137 /* OrdersListViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -302,6 +340,7 @@
 		2C11BD481D845896004B8137 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2AADD5051D87717A00356883 /* ShopMapTableCell */,
 				2C11BD6E1D85FB11004B8137 /* ProductTableViewCell */,
 				2C11BD5D1D84BA6A004B8137 /* OrderTableViewCell */,
 				2C11BD4C1D8458D8004B8137 /* ShopTableViewCell */,
@@ -431,6 +470,7 @@
 				TargetAttributes = {
 					2C3152391D8358170058BED2 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = WKY2745G4T;
 					};
 				};
 			};
@@ -457,6 +497,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AADD5091D8771AC00356883 /* ShopMapTableViewCell.xib in Resources */,
 				2C0F39AC1D835E35004F0273 /* SignUpViewController.xib in Resources */,
 				2C11BD501D8458E4004B8137 /* ShopTableViewCell.xib in Resources */,
 				2C0F39A81D835E35004F0273 /* SignInViewController.xib in Resources */,
@@ -529,11 +570,13 @@
 				2C11BD471D845822004B8137 /* ShopsListViewController.swift in Sources */,
 				2C0F39B01D835E35004F0273 /* Constants.swift in Sources */,
 				2C0F39AB1D835E35004F0273 /* SignUpViewController.swift in Sources */,
+				2AADD5041D87620D00356883 /* TaskTodayViewController.swift in Sources */,
 				2C11BD5C1D84B8EC004B8137 /* OrdersListViewController.swift in Sources */,
 				2C0F39AD1D835E35004F0273 /* SignUpViewModel.swift in Sources */,
 				2C0F39B21D835E35004F0273 /* RouterManager.swift in Sources */,
 				2C11BD561D84971C004B8137 /* LocationManager.swift in Sources */,
 				2C11BD631D84C7E4004B8137 /* CreateOrderViewController.swift in Sources */,
+				2AADD5071D87719C00356883 /* ShopMapTableViewCell.swift in Sources */,
 				2C0F39B51D835E35004F0273 /* TableViewBindingHelper.swift in Sources */,
 				2C0F39B31D835E35004F0273 /* ArrayExt.swift in Sources */,
 				2C0F39A61D835E35004F0273 /* SignInView.swift in Sources */,
@@ -541,6 +584,7 @@
 				2C0F39B11D835E35004F0273 /* ShopsManager.swift in Sources */,
 				2C11BD541D8484C4004B8137 /* CreateShopViewController.swift in Sources */,
 				2C0F39B71D835E35004F0273 /* Utils.swift in Sources */,
+				2AADD50E1D87828200356883 /* ShopLocationViewController.swift in Sources */,
 				2C0F39AE1D835E35004F0273 /* UITextField+RACKeyboardSupport.m in Sources */,
 				2C11BD6B1D85F63A004B8137 /* ProductModel.swift in Sources */,
 				2C11BD581D84B429004B8137 /* OrdersManager.swift in Sources */,
@@ -553,6 +597,7 @@
 				2C11BD5A1D84B479004B8137 /* OrderModel.swift in Sources */,
 				2C11BD5F1D84BA8D004B8137 /* OrderTableViewCell.swift in Sources */,
 				2C0F39A91D835E35004F0273 /* SignInViewModel.swift in Sources */,
+				2AADD50B1D8776B200356883 /* MapViewController.swift in Sources */,
 				2C11BD701D85FB28004B8137 /* ProductTableViewCell.swift in Sources */,
 				2C0F39AF1D835E35004F0273 /* AuthManager.swift in Sources */,
 				2C11BD671D84D34A004B8137 /* SelectShopViewController.swift in Sources */,
@@ -670,9 +715,10 @@
 			baseConfigurationReference = 3CE58E4A2C66DCFFD17ECD5B /* Pods-studioProectoveShops.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = studioProectoveShops/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Dmitriy-Gaponenko.studioProectoveShops";
+				PRODUCT_BUNDLE_IDENTIFIER = com.anadea.radarScanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "studioProectoveShops/Lib/Categories/BlogWall-Bridging-Header.h";
 			};
@@ -683,9 +729,10 @@
 			baseConfigurationReference = 5A9C518CE0D69314A87BA311 /* Pods-studioProectoveShops.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = studioProectoveShops/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "Dmitriy-Gaponenko.studioProectoveShops";
+				PRODUCT_BUNDLE_IDENTIFIER = com.anadea.radarScanner;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "studioProectoveShops/Lib/Categories/BlogWall-Bridging-Header.h";
 			};

@@ -144,14 +144,17 @@ class SelectProductViewController: UIViewController, UITableViewDataSource, UITa
         
         var largeSumOfOrders = [String: NSNumber]()
         
-        for dictionary in helpShopModel.orderArray! {
-            for (key, value) in dictionary {
-                if let comparingValue = largeSumOfOrders[key] {
-                    largeSumOfOrders[key] = comparingValue.integerValue < value.integerValue ? value : comparingValue
-                } else {
-                    largeSumOfOrders[key] = value
+        for (_, orderDict) in helpShopModel.orderArray! {
+//            for (keyOrder, orderDict) in dictionary {
+        
+                for (keyProductID, productCount) in orderDict {
+                    if let comparingValue = largeSumOfOrders[keyProductID] {
+                        largeSumOfOrders[keyProductID] = comparingValue.integerValue < productCount.integerValue ? productCount : comparingValue
+                    } else {
+                        largeSumOfOrders[keyProductID] = productCount
+                    }
                 }
-            }
+//            }
         }
         
         if largeSumOfOrders.count > 0 {
