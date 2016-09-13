@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseAuth
 
 class ViewController: UIViewController {
 
@@ -36,5 +38,12 @@ class ViewController: UIViewController {
         print("shopsListButtonAction")
         navigationController?.pushViewController(ShopsListViewController.controllerFromStoryboard(), animated: true)
     }
+    
+    @IBAction func logoutAction(sender: AnyObject) {
+        print("shopsListButtonAction")
+        try! FIRAuth.auth()!.signOut()
+        router().showSignInController()
+    }
+    
 }
 

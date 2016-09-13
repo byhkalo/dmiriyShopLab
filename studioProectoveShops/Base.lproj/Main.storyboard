@@ -69,12 +69,6 @@
                                     <action selector="mapButtonAction:" destination="E5e-cn-OrJ" eventType="touchUpInside" id="aeD-Dn-QbW"/>
                                 </connections>
                             </button>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lw4-VI-4bG">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                <items>
-                                    <navigationItem title="Menu" id="lEl-yh-CP9"/>
-                                </items>
-                            </navigationBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Tz-Hx-V6I">
                                 <rect key="frame" x="143" y="304" width="88" height="39"/>
                                 <color key="backgroundColor" red="0.31408888610000002" green="0.64999581959999997" blue="0.7912554825" alpha="1" colorSpace="calibratedRGB"/>
@@ -96,18 +90,30 @@
                                     <action selector="shopsListButtonAction:" destination="E5e-cn-OrJ" eventType="touchUpInside" id="kf2-PE-78N"/>
                                 </connections>
                             </button>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lw4-VI-4bG">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="Menu" id="lEl-yh-CP9">
+                                        <barButtonItem key="rightBarButtonItem" title="Logout" id="He1-pB-dsc">
+                                            <connections>
+                                                <action selector="logoutAction:" destination="E5e-cn-OrJ" id="QkB-8T-rvR"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="aUT-ZW-VoM" firstAttribute="centerX" secondItem="aJS-VM-xV5" secondAttribute="centerX" id="07k-L7-ElU"/>
                             <constraint firstItem="6bi-15-WTF" firstAttribute="top" secondItem="smG-yR-JEa" secondAttribute="bottom" constant="38" id="08P-3m-kWo"/>
+                            <constraint firstItem="Lw4-VI-4bG" firstAttribute="top" secondItem="smG-yR-JEa" secondAttribute="bottom" id="0E3-PG-jFw"/>
                             <constraint firstItem="5Tz-Hx-V6I" firstAttribute="top" secondItem="aUT-ZW-VoM" secondAttribute="bottom" constant="25" id="6hw-mt-l2W"/>
                             <constraint firstItem="Lw4-VI-4bG" firstAttribute="leading" secondItem="aJS-VM-xV5" secondAttribute="leading" id="L3w-rW-RAO"/>
                             <constraint firstItem="aUT-ZW-VoM" firstAttribute="top" secondItem="QPp-6N-Szh" secondAttribute="bottom" constant="25" id="RxK-WW-hfq"/>
                             <constraint firstItem="QPp-6N-Szh" firstAttribute="top" secondItem="6bi-15-WTF" secondAttribute="bottom" constant="46" id="VZ9-5r-63P"/>
                             <constraint firstAttribute="trailing" secondItem="Lw4-VI-4bG" secondAttribute="trailing" id="VpN-FG-hsa"/>
                             <constraint firstItem="6bi-15-WTF" firstAttribute="centerX" secondItem="aJS-VM-xV5" secondAttribute="centerX" id="dIc-1z-qRQ"/>
-                            <constraint firstItem="Lw4-VI-4bG" firstAttribute="top" secondItem="aJS-VM-xV5" secondAttribute="top" id="ndn-hi-izJ"/>
                             <constraint firstItem="5Tz-Hx-V6I" firstAttribute="centerX" secondItem="aJS-VM-xV5" secondAttribute="centerX" id="pm1-1U-hfK"/>
                             <constraint firstItem="QPp-6N-Szh" firstAttribute="centerX" secondItem="aJS-VM-xV5" secondAttribute="centerX" id="rgc-gR-Iqv"/>
                         </constraints>
