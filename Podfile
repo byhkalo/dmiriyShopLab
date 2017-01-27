@@ -5,11 +5,13 @@ xcodeproj 'studioProectoveShops.xcodeproj'
 use_frameworks!
 
 target ‘studioProectoveShops’ do
-  pod 'Alamofire', '~> 3.4'
+  pod 'Alamofire', '~> 4.2'
   pod 'Firebase/Database'
   pod 'Firebase/Auth'
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
 end
 
-pod 'ReactiveCocoa', '~> 4.1'
-pod 'OHHTTPStubs', '~> 5.0'
+pod 'PKHUD', '~> 4.0'
+pod 'ReactiveCocoa', '5.0.0-alpha.5'
 pod 'Firebase'
