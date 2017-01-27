@@ -62,3 +62,5 @@ fastlane/test_output
 fastlane/README.md
 *.dSYM.zip
 *.ipa
+.DS_Store
+1. Modyfikacja strony logowania, dodanie możliwośc
