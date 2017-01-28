@@ -44,7 +44,7 @@ class CreateOrderViewController: UIViewController, UITableViewDataSource, UITabl
     
     static func controllerFromStoryboard() -> CreateOrderViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewControllerWithIdentifier(String(CreateOrderViewController)) as! CreateOrderViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: CreateOrderViewController())) as! CreateOrderViewController
         return controller
     }
     
@@ -53,50 +53,49 @@ class CreateOrderViewController: UIViewController, UITableViewDataSource, UITabl
 
         productsTableView.delegate = self
         productsTableView.dataSource = self
-        deliveryDatePicker.date = NSDate().dateByAddingTimeInterval(24 * 60 * 60) // set next date
+        deliveryDatePicker.date = Date().addingTimeInterval(24 * 60 * 60) // set next date
     }
 
     func updateProductTableView() {
-        ProductsManager.sharedInstance.getProducts(index: 0, count: 20)
-            .on(failed: { (error) in
-                print("(CreateOrderViewController) Get Error from firebase = \(error)")
-                }, next: { (productsModels) in
-                    var helpModelsArray = [ProductModel]()
-                    var totalPrice: Float = 0
-                    for model in productsModels {
-                        if let count = self.productsOrderDictionary![model.identifier] {
-                            helpModelsArray.append(model)
-                            let countProduct = count.floatValue
-                            totalPrice += (countProduct * model.price)
-                        }
-                    }
-                    
-                    self.productsModelsArray = helpModelsArray
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.totalPrice = totalPrice
-                        self.productsTableView.reloadData()
-                    })
-            }).start()
+        ProductsManager.sharedInstance.getProducts(index: 0, count: 20).on(failed: { (error) in
+            print("(CreateOrderViewController) Get Error from firebase = \(error)")
+        }) { (productModels) in
+            var helpModelsArray = [ProductModel]()
+            var totalPrice: Float = 0
+            for model in productModels {
+                if let count = self.productsOrderDictionary![model.identifier] {
+                    helpModelsArray.append(model)
+                    let countProduct = count.floatValue
+                    totalPrice += (countProduct * model.price)
+                }
+            }
+            
+            self.productsModelsArray = helpModelsArray
+            DispatchQueue.main.async {
+                self.totalPrice = totalPrice
+                self.productsTableView.reloadData()
+            }
+        }.start()
     }
     
 //    MARK: - UITableViewDataSource
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return productsOrderDictionary?.count ?? 0
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "cellIdentifier"
         
-        var cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)
+        var cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
         
         if cell == nil {
-            cell = UITableViewCell(style: .Value1, reuseIdentifier: cellIdentifier)
+            cell = UITableViewCell(style: .value1, reuseIdentifier: cellIdentifier)
         }
         
         let model = productsModelsArray[indexPath.row]
         
         cell?.textLabel?.text = model.name
-        let value = productsOrderDictionary![model.identifier]?.integerValue
+        let value = productsOrderDictionary![model.identifier]?.intValue
         cell?.detailTextLabel?.text = String(value ?? 0)
         
         return cell!
@@ -104,17 +103,17 @@ class CreateOrderViewController: UIViewController, UITableViewDataSource, UITabl
     
 //    MARK: - UITableViewDelegate
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
 //    MARK: - Actions
 
-    @IBAction func backButtonAction(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonAction(_ sender: AnyObject) {
+        _ = navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func selectShopAction(sender: AnyObject) {
+    @IBAction func selectShopAction(_ sender: AnyObject) {
         let selectShopController = SelectShopViewController.controllerFromStoryboard()
         
         if let shopModel = shopModel {
@@ -128,7 +127,7 @@ class CreateOrderViewController: UIViewController, UITableViewDataSource, UITabl
         print("selectShopAction")
     }
 
-    @IBAction func selectProductAction(sender: AnyObject) {
+    @IBAction func selectProductAction(_ sender: AnyObject) {
         guard let shopModel = shopModel else {
             router().displayAlertTitle("Sorry", message: "Please, select shop firstly")
             return
@@ -147,7 +146,7 @@ class CreateOrderViewController: UIViewController, UITableViewDataSource, UITabl
         print("selectProductAction")
     }
     
-    @IBAction func createOrderAction(sender: AnyObject) {
+    @IBAction func createOrderAction(_ sender: AnyObject) {
         
         guard let shopModel = shopModel, let productsOrderDictionary = productsOrderDictionary else {
             router().displayAlertTitle("Sorry", message: "Please, Check your order")
@@ -157,40 +156,40 @@ class CreateOrderViewController: UIViewController, UITableViewDataSource, UITabl
         OrdersManager.sharedInstance
             .createNewOrderShopIdentifier(shopModel,
                                           deliveryDate: deliveryDatePicker.date,
-                                          createDate: NSDate(),
+                                          createDate: Date(),
                                           totalPrice: totalPrice,
                                           productArray: productsOrderDictionary) { (isSuccess) in
                                             
-                                            ShopsManager.sharedInstance.insertOrderToShopId(shopModel.identifier, newOrderValue: productsOrderDictionary)
-                                                .on(failed: { (error) in
-                                                    print("Fucking Eror from FireBase")
-                                                }, next: { (isSuccess) in
-                                                    if isSuccess {
-                                                        print("Maybe success from FireBase")
-                                                    } else {
-                                                        print("Maybe NOT successfully from FireBase")
-                                                    }
+                                            ShopsManager.sharedInstance.insertOrderToShopId(shopModel.identifier, newOrderValue: productsOrderDictionary).on(failed: { (error) in
+                                                print("Fucking Eror from FireBase. Error: \(error)")
+                                            }, value: { (isSuccess) in
+                                                if isSuccess {
+                                                    print("Maybe success from FireBase")
+                                                } else {
+                                                    print("Maybe NOT successfully from FireBase")
+                                                }
                                             }).start()
                                             
                                             for productModel in self.productsModelsArray {
                                                 let oldStorageCount = productModel.inStorage
-                                                let orderCount = (self.productsOrderDictionary![productModel.identifier])?.integerValue
+                                                let orderCount = (self.productsOrderDictionary![productModel.identifier])?.intValue
                                                 let newValue = oldStorageCount - orderCount!
                                                 
                                                 ProductsManager.sharedInstance
                                                     .changeInStorageCountByProductId(productModel.identifier, newValue: newValue)
                                                     .on(failed: { (error) in
-                                                        print("Fucking Eror from FireBase")
-                                                        }, next: { (isSuccess) in
-                                                            if isSuccess {
-                                                                print("Maybe success from FireBase")
-                                                            } else {
-                                                                print("Maybe NOT successfully from FireBase")
-                                                            }
+                                                        print("Fucking Eror from FireBase. Error: \(error)")
+                                                    }, value: { (isSuccess) in
+                                                        if isSuccess {
+                                                            print("Maybe success from FireBase")
+                                                        } else {
+                                                            print("Maybe NOT successfully from FireBase")
+                                                        }
                                                     }).start()
                                             }
-                                            dispatch_async(dispatch_get_main_queue(), {
-                                                self.navigationController?.popViewControllerAnimated(true)
+                                            
+                                            DispatchQueue.main.async(execute: {
+                                                _ = self.navigationController?.popViewController(animated: true)
                                                 router().displayAlertTitle("Success", message: "Order has been placed successfully")
                                             })
         }

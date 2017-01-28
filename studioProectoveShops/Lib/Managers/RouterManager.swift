@@ -19,13 +19,13 @@ class RouterManager {
     
     //MARK: - Prepare functions
     
-    func createControllerFromStoryboardName(storyboardName: String, identifier: String) -> UIViewController {
+    func createControllerFromStoryboardName(_ storyboardName: String, identifier: String) -> UIViewController {
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
-        let controller = storyboard.instantiateViewControllerWithIdentifier(identifier)
+        let controller = storyboard.instantiateViewController(withIdentifier: identifier)
         return controller
     }
     
-    func presentController(viewController: UIViewController) {
+    func presentController(_ viewController: UIViewController) {
         let navController = self.navigationController
         if navController.topViewController == navController.viewControllers[0] {
             navController.pushViewController(viewController, animated: true)
@@ -34,7 +34,7 @@ class RouterManager {
         let previousController = navController.viewControllers[navController.viewControllers.count-2]
         
         if previousController.classForCoder == viewController.classForCoder {
-            navController.popViewControllerAnimated(true)
+            navController.popViewController(animated: true)
         } else {
             navController.pushViewController(viewController, animated: true)
 //            self.navigationController.viewControllers[0] = viewController
@@ -53,18 +53,18 @@ class RouterManager {
     }
     
     func showBlogTabBarController() {
-        self.presentController(self.createControllerFromStoryboardName("Main", identifier: String(ViewController)))
+        self.presentController(self.createControllerFromStoryboardName("Main", identifier: String(describing: ViewController())))
     }
     
     //MARK: - Show Alerts
     
-    func displayAlertController(alertController: UIAlertController) {
-        navigationController.topViewController!.presentViewController(alertController, animated: true, completion: nil)
+    func displayAlertController(_ alertController: UIAlertController) {
+        navigationController.topViewController!.present(alertController, animated: true, completion: nil)
     }
     
-    func displayAlertTitle(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        let action = UIAlertAction(title: "OK", style: .Default, handler: nil)
+    func displayAlertTitle(_ title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
         alertController.addAction(action)
         displayAlertController(alertController)
     }

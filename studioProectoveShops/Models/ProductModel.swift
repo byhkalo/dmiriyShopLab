@@ -22,12 +22,12 @@ class ProductModel: NSObject {
                   name: model[Constants.Product.Name]! as! String,
                   descriptionProduct: model[Constants.Product.Description]! as! String,
                   price: (model[Constants.Product.Price]! as! NSNumber).floatValue,
-                  inStorage: (model[Constants.Product.InStorage]! as! NSNumber).integerValue)
+                  inStorage: (model[Constants.Product.InStorage]! as! NSNumber).intValue)
     }
     
     convenience init(snapshot: FIRDataSnapshot) {
         var value = snapshot.value! as! Dictionary<String, AnyObject>
-        value[Constants.Product.Identifier] = snapshot.key
+        value[Constants.Product.Identifier] = snapshot.key as AnyObject?
         self.init(model: value)
     }
     

@@ -13,8 +13,8 @@ class OrderModel: NSObject {
     
     let identifier: String
     let shopModel: ShopModel
-    let deliveryDate: NSDate
-    let createDate: NSDate
+    let deliveryDate: Date
+    let createDate: Date
     let totalPrice: Float?
     let productArray: Dictionary<String, NSNumber>?
     
@@ -29,11 +29,11 @@ class OrderModel: NSObject {
     
     convenience init(snapshot: FIRDataSnapshot) {
         var value = snapshot.value! as! Dictionary<String, AnyObject>
-        value[Constants.Order.Identifier] = snapshot.key
+        value[Constants.Order.Identifier] = snapshot.key as AnyObject?
         self.init(model: value)
     }
     
-    init(identifier: String, shopModel: ShopModel, deliveryDate: NSDate, createDate: NSDate, totalPrice: Float?, productArray: Dictionary<String, NSNumber>?) {
+    init(identifier: String, shopModel: ShopModel, deliveryDate: Date, createDate: Date, totalPrice: Float?, productArray: Dictionary<String, NSNumber>?) {
         
         self.identifier = identifier
         self.shopModel = shopModel

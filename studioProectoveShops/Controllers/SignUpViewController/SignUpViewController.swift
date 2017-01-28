@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import ReactiveCocoa
+import ReactiveSwift
 import Result
 
 class SignUpViewController: UIViewController, UITextFieldDelegate {
@@ -15,53 +15,43 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     var mainView : SignUpView? {
         return self.view as? SignUpView
     }
-    var viewModel: SignUpViewModel = SignUpViewModel(authManager: AuthManager.sharedInstance)
     
-    var textFields : Array <UITextField!> {
+    var textFields : Array <UITextField?> {
         return [mainView?.userNameTextField, mainView?.emailTextField, mainView?.passwordTextField, mainView?.confPassTextField]
     }
     
     //MARK: - Loading View
     
     override func viewDidLoad() {
-        bindProperties()
         textFieldReturnButton()
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         clearTextFields()
     }
     
     //MARK: - Private
     
-    private func clearTextFields() {
-        self.textFields.forEach { $0.text = "" }
+    fileprivate func clearTextFields() {
+        self.textFields.forEach { $0?.text = "" }
     }
     
-    //MARK: - Bindings
-    
-    func bindProperties() {
-        mainView!.passwordTextField.rac_secureTextEntry <~ mainView!.switchView.rac_newOnChannel
-        mainView!.confPassTextField.rac_secureTextEntry <~ mainView!.switchView.rac_newOnChannel
-        mainView!.signUpButton.rac_enabled <~ viewModel.enabledSignUpButton
-        
-        viewModel.usernameText <~ mainView!.userNameTextField.rac_textKB
-        viewModel.emailText <~ mainView!.emailTextField.rac_textKB
-        viewModel.passwordText <~ mainView!.passwordTextField.rac_textKB
-        viewModel.confirmPasswordText <~ mainView!.confPassTextField.rac_textKB
-        viewModel.buttonSignInPressSignal = self.mainView?.signInButton.rac_buttonTouchUpInside
-        viewModel.buttonSignUpPressSignal = self.mainView?.signUpButton.rac_buttonTouchUpInside
+    @IBAction func signUpButtonPressed(_ sender: UIButton) {
     }
+    @IBAction func signInButtonPressed(_ sender: UIButton) {
+    }
+    
     
     func textFieldReturnButton() {
-        for (index, value) in textFields.enumerate() {
-            value!.rac_keyboardReturnSignal().subscribeNext({
-                $0.resignFirstResponder()
-                if (value != self.textFields.last) {
+        for (index, value) in textFields.enumerated() {
+            value?.reactive.controlEvents(.primaryActionTriggered).observe({ (event) in
+                let textField = event.value
+                textField?.resignFirstResponder()
+                if (textField! != self.textFields.last!) {
                     let helpIndex = index + 1
                     self.textFields[helpIndex]!.becomeFirstResponder()
                 }
-            })
+            })?.dispose()
         }
     }
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-typealias ProductStateChanged = (isSelected: Bool, selectedCount: Int) -> ()
+typealias ProductStateChanged = (_ isSelected: Bool, _ selectedCount: Int) -> ()
 
 class ProductTableViewCell: UITableViewCell, UITextFieldDelegate {
 
@@ -27,7 +27,7 @@ class ProductTableViewCell: UITableViewCell, UITextFieldDelegate {
         
         let keyboardDoneButtonView = UIToolbar.init()
         keyboardDoneButtonView.sizeToFit()
-        let doneButton = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.Done,
+        let doneButton = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.done,
                                               target: self,
                                               action: #selector(self.finishEditing))
         
@@ -35,11 +35,11 @@ class ProductTableViewCell: UITableViewCell, UITextFieldDelegate {
         countGetTextField.inputAccessoryView = keyboardDoneButtonView
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
-    func fillByModel(model: ProductModel) {
+    func fillByModel(_ model: ProductModel) {
         productModel = model
         productIdentifierLabel.text = model.identifier
         productNameLabel.text = model.name
@@ -49,19 +49,19 @@ class ProductTableViewCell: UITableViewCell, UITextFieldDelegate {
 
 //    MARK: - UITextFieldDelegate
 
-    func textFieldShouldEndEditing(textField: UITextField) -> Bool {
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         finishEditing()
         return true
     }
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         finishEditing()
         return true
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool  {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool  {
         var txtAfterUpdate = textField.text! as NSString
-        txtAfterUpdate = txtAfterUpdate.stringByReplacingCharactersInRange(range, withString: string)
+        txtAfterUpdate = txtAfterUpdate.replacingCharacters(in: range, with: string) as NSString
         let stringValue = String(txtAfterUpdate)
         return (Int(stringValue) != nil) || stringValue.characters.count == 0 ? true : false
     }
@@ -70,22 +70,22 @@ class ProductTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     func finishEditing() {
         if let stateChangedBlock = stateChangedBlock {
-            stateChangedBlock(isSelected: checkBoxButton.selected, selectedCount: Int(countGetTextField.text ?? "0") ?? 0)
+            stateChangedBlock(checkBoxButton.isSelected, Int(countGetTextField.text ?? "0") ?? 0)
         }
         countGetTextField.resignFirstResponder()
     }
     
-    func setSelectedCell(selected: Bool) -> () {
-        checkBoxButton.selected = selected
+    func setSelectedCell(_ selected: Bool) -> () {
+        checkBoxButton.isSelected = selected
         if let stateChangedBlock = stateChangedBlock {
-            stateChangedBlock(isSelected: selected, selectedCount: Int(countGetTextField.text ?? "0") ?? 0)
+            stateChangedBlock(selected, Int(countGetTextField.text ?? "0") ?? 0)
         }
     }
     
 //    MARK: - Actions
     
-    @IBAction func checkBoxButtonAction(sender: UIButton) {
-        setSelectedCell(!sender.selected)
+    @IBAction func checkBoxButtonAction(_ sender: UIButton) {
+        setSelectedCell(!sender.isSelected)
         print("checkBoxButtonAction")
     }
     

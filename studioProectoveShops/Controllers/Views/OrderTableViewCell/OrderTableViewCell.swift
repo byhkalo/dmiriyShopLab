@@ -20,13 +20,13 @@ class OrderTableViewCell: UITableViewCell {
         // Initialization code
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
     }
     
-    func fillByModel(model: OrderModel) {
+    func fillByModel(_ model: OrderModel) {
         orderIdentifierLabel.text = model.identifier
         shopNameLabel.text = model.shopModel.name
         totalPriceLabel.text = String(Float(model.totalPrice ?? 0.0))

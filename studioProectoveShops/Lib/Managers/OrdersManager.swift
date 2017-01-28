@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseDatabase
 import FirebaseAuth
-import ReactiveCocoa
+import ReactiveSwift
 
 class OrdersManager {
     
@@ -21,31 +21,31 @@ class OrdersManager {
         self.ref = FIRDatabase.database().reference()
     }
     
-    func getOrders(index index: Int, count: Int) -> SignalProducer <Array<OrderModel>, NSError> {
+    func getOrders(index: Int, count: Int) -> SignalProducer <Array<OrderModel>, NSError> {
         return SignalProducer { (sink, disposable) -> () in
-            self.ref.child(Constants.Orders).observeEventType(FIRDataEventType.Value,
-                withBlock: { (snapshot) in
+            self.ref.child(Constants.Orders).observe(FIRDataEventType.value,
+                                                     with: { (snapshot) in
                     var ordersViewModels = [OrderModel]()
                     
                     for list in snapshot.children {
                         let order = OrderModel.init(snapshot: list as! FIRDataSnapshot)
                         ordersViewModels.append(order)
                     }
-                    sink.sendNext(ordersViewModels)
+                    sink.send(value: ordersViewModels)
                     //                sink.sendCompleted()
             })
         }
     }
     
-    func createNewOrderShopIdentifier(shopModel: ShopModel, deliveryDate: NSDate, createDate: NSDate, totalPrice: Float, productArray: Dictionary<String, NSNumber>, completionHandler: (isSuccess: Bool) ->()) {
-        let newOrder : [String : AnyObject] = [Constants.Order.ShopModel : shopModel.dictionaryPresentationForOrder(),
-                                              Constants.Order.DeliveryDate : Converter.sringFromDate(deliveryDate),
-                                              Constants.Order.CreateDate : Converter.sringFromDate(createDate),
-                                              Constants.Order.TotalPrice : NSNumber(float: totalPrice),
-                                              Constants.Order.OrderElementArray : productArray]
+    func createNewOrderShopIdentifier(_ shopModel: ShopModel, deliveryDate: Date, createDate: Date, totalPrice: Float, productArray: Dictionary<String, NSNumber>, completionHandler: @escaping (_ isSuccess: Bool) ->()) {
+        let newOrder : [String : AnyObject] = [Constants.Order.ShopModel : shopModel.dictionaryPresentationForOrder() as AnyObject,
+                                              Constants.Order.DeliveryDate : Converter.sringFromDate(deliveryDate) as AnyObject,
+                                              Constants.Order.CreateDate : Converter.sringFromDate(createDate) as AnyObject,
+                                              Constants.Order.TotalPrice : NSNumber(value: totalPrice as Float),
+                                              Constants.Order.OrderElementArray : productArray as AnyObject]
         
         self.ref.child(Constants.Orders).childByAutoId().setValue(newOrder) { (error, reference) in
-            completionHandler(isSuccess: error == nil)
+            completionHandler(error == nil)
         } 
     }
 }

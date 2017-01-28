@@ -13,7 +13,7 @@ class ShopModel: NSObject {
     
     let name: String
     let identifier: String
-    let lastVisitDate: NSDate
+    let lastVisitDate: Date
     let lat: Float
     let lon: Float
     let planFrequency: Int
@@ -26,16 +26,16 @@ class ShopModel: NSObject {
                   lastVisitDate: Converter.dateFromString(model[Constants.Shop.LastVisitDate]! as! String)!,
                   lat: (coordinate["lat"]! as! NSNumber).floatValue,
                   lon: (coordinate["lon"]! as! NSNumber).floatValue,
-                  planFrequency: (model[Constants.Shop.PlanFrequency]! as! NSNumber).integerValue,
+                  planFrequency: (model[Constants.Shop.PlanFrequency]! as! NSNumber).intValue,
                   orderArray: model[Constants.Shop.Orders] as? Dictionary<String, Dictionary<String, NSNumber>>)
     }
     convenience init(snapshot: FIRDataSnapshot) {
         var value = snapshot.value! as! Dictionary<String, AnyObject>
-        value[Constants.Shop.Identifier] = snapshot.key
+        value[Constants.Shop.Identifier] = snapshot.key as AnyObject?
         self.init(model: value)
     }
     
-    init(name:String, identifier: String, lastVisitDate: NSDate, lat: Float, lon: Float, planFrequency: Int, orderArray: Dictionary<String, Dictionary<String, NSNumber>>?) {
+    init(name:String, identifier: String, lastVisitDate: Date, lat: Float, lon: Float, planFrequency: Int, orderArray: Dictionary<String, Dictionary<String, NSNumber>>?) {
         self.name = name
         self.identifier = identifier
         self.lastVisitDate = lastVisitDate
@@ -45,12 +45,12 @@ class ShopModel: NSObject {
         self.orderArray = orderArray
     }
     
-    func dictionaryPresentationForOrder() -> Dictionary<String, AnyObject> {
-        let shopDictionary : [String : AnyObject] = [Constants.Shop.Identifier: identifier,
-                                                     Constants.Shop.Name  : name,
-                                                     Constants.Shop.LastVisitDate : Converter.sringFromDate(lastVisitDate),
-                                                     Constants.Shop.Coordinate : ["lat": NSNumber(float: lat), "lon": NSNumber(float: lon)],
-                                                     Constants.Shop.PlanFrequency: NSNumber(integer: planFrequency)]
+    func dictionaryPresentationForOrder() -> Dictionary<String, Any> {
+        let shopDictionary : [String : Any] = [Constants.Shop.Identifier: identifier as AnyObject,
+                                                     Constants.Shop.Name  : name as AnyObject,
+                                                     Constants.Shop.LastVisitDate : Converter.sringFromDate(lastVisitDate) as AnyObject,
+                                                     Constants.Shop.Coordinate : ["lat": NSNumber(value: lat as Float), "lon": NSNumber(value: lon as Float)],
+                                                     Constants.Shop.PlanFrequency: NSNumber(value: planFrequency as Int)]
         return shopDictionary
     }
 }

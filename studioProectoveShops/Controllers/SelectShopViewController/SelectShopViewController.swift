@@ -7,8 +7,23 @@
 //
 
 import UIKit
+import CoreLocation
 
-typealias SelectShopBlock = (shopModel: ShopModel) -> ()
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+
+typealias SelectShopBlock = (_ shopModel: ShopModel) -> ()
 
 class SelectShopViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
@@ -21,7 +36,7 @@ class SelectShopViewController: UIViewController, UITableViewDataSource, UITable
     
     static func controllerFromStoryboard() -> SelectShopViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewControllerWithIdentifier(String(SelectShopViewController)) as! SelectShopViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: SelectShopViewController())) as! SelectShopViewController
         return controller
     }
     
@@ -37,33 +52,33 @@ class SelectShopViewController: UIViewController, UITableViewDataSource, UITable
 
 //    MARK: - UISearchBarDelegate
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         findShop()
     }
     
-    func searchBarResultsListButtonClicked(searchBar: UISearchBar) {
+    func searchBarResultsListButtonClicked(_ searchBar: UISearchBar) {
         findShop()
     }
     
 //    MARK: - UITableViewDataSource
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return shopsArray?.count ?? 0
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let simpleTableIdentifier = "ShopTableViewCell";
-        var cell = tableView.dequeueReusableCellWithIdentifier(simpleTableIdentifier) as? ShopTableViewCell
+        var cell = tableView.dequeueReusableCell(withIdentifier: simpleTableIdentifier) as? ShopTableViewCell
         if (cell == nil) {
-            let nib = NSBundle.mainBundle().loadNibNamed(simpleTableIdentifier, owner: self, options: nil)
-            cell = nib.first as? ShopTableViewCell
+            let nib = Bundle.main.loadNibNamed(simpleTableIdentifier, owner: self, options: nil)
+            cell = nib?.first as? ShopTableViewCell
         }
         
         cell?.fillByModel(shopsArray![indexPath.row])
         
         if let selectedShop = selectedShop {
             if selectedShop.identifier == shopsArray![indexPath.row].identifier {
-                tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
+                tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
             }
         }
         
@@ -72,7 +87,7 @@ class SelectShopViewController: UIViewController, UITableViewDataSource, UITable
     
 //    MARK: - UITableViewDelegate
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedShop = shopsArray![indexPath.row]
     }
     
@@ -105,7 +120,7 @@ class SelectShopViewController: UIViewController, UITableViewDataSource, UITable
     
 //    MARK: - Sort func
     
-    func sortedShopsArrayByNearestLocation(shopsArray: [ShopModel]) -> [ShopModel] {
+    func sortedShopsArrayByNearestLocation(_ shopsArray: [ShopModel]) -> [ShopModel] {
         
         if let currentLocation = LocationManager.sharedInstance.currentLocation {
             
@@ -114,14 +129,14 @@ class SelectShopViewController: UIViewController, UITableViewDataSource, UITable
             
             var presentingShopsArray: Array<Dictionary<String, AnyObject>> = Array()
             
-            for (_, shopModel) in shopsArray.enumerate() {
+            for (_, shopModel) in shopsArray.enumerated() {
                 let shopLocation = CLLocation(latitude: Double(shopModel.lat), longitude: Double(shopModel.lon))
-                let distance = currentLocation.distanceFromLocation(shopLocation)
-                let dict = [kShopModel: shopModel, kDistance: NSNumber(float: Float(distance))]
+                let distance = currentLocation.distance(from: shopLocation)
+                let dict = [kShopModel: shopModel, kDistance: NSNumber(value: Float(distance))]
                 presentingShopsArray.append(dict)
             }
 
-            presentingShopsArray.sortInPlace({ (dictionaryFirst, dictionaryNext) -> Bool in
+            presentingShopsArray.sort(by: { (dictionaryFirst, dictionaryNext) -> Bool in
                 let distanceFirst = (dictionaryFirst[kDistance] as? NSNumber)?.floatValue
                 let distanceNext = (dictionaryNext[kDistance] as? NSNumber)?.floatValue
                 return distanceFirst < distanceNext
@@ -143,16 +158,16 @@ class SelectShopViewController: UIViewController, UITableViewDataSource, UITable
     
 //    MARK: - Actions
     
-    @IBAction func backButtonAction(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonAction(_ sender: AnyObject) {
+        _ = navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func selectShopAction(sender: AnyObject) {
+    @IBAction func selectShopAction(_ sender: AnyObject) {
         if let selectedShop = selectedShop {
             if let selectBlock = selectBlock {
-                selectBlock(shopModel: selectedShop)
+                selectBlock(selectedShop)
             }
-            navigationController?.popViewControllerAnimated(true)
+            _ = navigationController?.popViewController(animated: true)
         } else {
             router().displayAlertTitle("Sorry", message: "Please, select shop from list")
         }

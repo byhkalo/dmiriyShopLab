@@ -16,7 +16,7 @@ class ShopsListViewController: UIViewController, UITableViewDataSource, UITableV
     
     static func controllerFromStoryboard() -> ShopsListViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewControllerWithIdentifier(String(ShopsListViewController)) as! ShopsListViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: ShopsListViewController())) as! ShopsListViewController
         return controller
     }
     
@@ -38,17 +38,17 @@ class ShopsListViewController: UIViewController, UITableViewDataSource, UITableV
 
 //    MARK: - UITableViewDataSource
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return shopsArray?.count ?? 0
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let simpleTableIdentifier = "ShopTableViewCell";
-        var cell = tableView.dequeueReusableCellWithIdentifier(simpleTableIdentifier) as? ShopTableViewCell
+        var cell = tableView.dequeueReusableCell(withIdentifier: simpleTableIdentifier) as? ShopTableViewCell
         if (cell == nil) {
-            let nib = NSBundle.mainBundle().loadNibNamed(simpleTableIdentifier, owner: self, options: nil)
-            cell = nib.first as? ShopTableViewCell
+            let nib = Bundle.main.loadNibNamed(simpleTableIdentifier, owner: self, options: nil)
+            cell = nib?.first as? ShopTableViewCell
         }
         
         cell?.fillByModel(shopsArray![indexPath.row])
@@ -58,8 +58,8 @@ class ShopsListViewController: UIViewController, UITableViewDataSource, UITableV
     
 //    MARK: - UITableViewDelegate  
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
         
         let showShopController = ShopLocationViewController.controllerFromStoryboard()
@@ -70,11 +70,11 @@ class ShopsListViewController: UIViewController, UITableViewDataSource, UITableV
     
 //    MARK: - Actions
     
-    @IBAction func backButtonAction(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonAction(_ sender: AnyObject) {
+        _ = navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func addShopButtonAction(sender: AnyObject) {
+    @IBAction func addShopButtonAction(_ sender: AnyObject) {
         navigationController?.pushViewController(CreateShopViewController.controllerFromStoryboard(), animated: true)
     }
 }

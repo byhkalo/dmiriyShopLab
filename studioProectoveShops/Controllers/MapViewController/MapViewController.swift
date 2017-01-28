@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
@@ -28,7 +29,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     static func controllerFromStoryboard() -> MapViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewControllerWithIdentifier(String(MapViewController)) as! MapViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: MapViewController())) as! MapViewController
         return controller
     }
     
@@ -38,7 +39,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         mapView.delegate = self
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         LocationManager.sharedInstance.secondDelegate = nil
         LocationManager.sharedInstance.locationManager.startUpdatingLocation()
@@ -56,10 +57,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             let request:MKDirectionsRequest = MKDirectionsRequest()
             request.source = source
             request.destination = destination
-            request.transportType = MKDirectionsTransportType.Walking
+            request.transportType = MKDirectionsTransportType.walking
             
             let directions = MKDirections(request: request)
-            directions.calculateDirectionsWithCompletionHandler ({
+            directions.calculate (completionHandler: {
                 (response: MKDirectionsResponse?, error: NSError?) in
                 if error == nil {
                     self.showRoute(response!)
@@ -67,14 +68,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 else{
                     print("trace the error \(error?.localizedDescription)")
                 }
-            })
+            } as! MKDirectionsHandler)
 
         }
     }
     
-    func showRoute(response:MKDirectionsResponse){
+    func showRoute(_ response:MKDirectionsResponse){
         for route in response.routes {
-            mapView.addOverlay(route.polyline, level: MKOverlayLevel.AboveRoads)
+            mapView.add(route.polyline, level: MKOverlayLevel.aboveRoads)
 //            var routeSeconds = route.expectedTravelTime
 //            let routeDistance = route.distance
 //            print("distance between two points is \(routeSeconds) and \(routeDistance)")
@@ -84,29 +85,29 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
 //    MARK: - CLLocationManagerDelegate
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userCoordinate = LocationManager.sharedInstance.currentLocation?.coordinate
         let eyeCoordinate = LocationManager.sharedInstance.currentLocation?.coordinate
-        let mapCamera = MKMapCamera(lookingAtCenterCoordinate: userCoordinate!, fromEyeCoordinate: eyeCoordinate!, eyeAltitude: 2000.0)
+        let mapCamera = MKMapCamera(lookingAtCenter: userCoordinate!, fromEyeCoordinate: eyeCoordinate!, eyeAltitude: 2000.0)
         mapView.camera = mapCamera
         manager.stopUpdatingLocation()
     }
     
 //    MARK: - MKMapViewDelegate
     
-    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer! {
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         
         let polylineRenderer = MKPolylineRenderer(overlay: overlay)
         if (overlay is MKPolyline) {
             if mapView.overlays.count == 1 {
                 polylineRenderer.strokeColor =
-                    UIColor.blueColor().colorWithAlphaComponent(0.75)
+                    UIColor.blue.withAlphaComponent(0.75)
             } else if mapView.overlays.count == 2 {
                 polylineRenderer.strokeColor =
-                    UIColor.greenColor().colorWithAlphaComponent(0.75)
+                    UIColor.green.withAlphaComponent(0.75)
             } else if mapView.overlays.count == 3 {
                 polylineRenderer.strokeColor =
-                    UIColor.redColor().colorWithAlphaComponent(0.75)
+                    UIColor.red.withAlphaComponent(0.75)
             }
             polylineRenderer.lineWidth = 5
         }
@@ -115,7 +116,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     //    MARK: - Actions
     
-    @IBAction func backButtonAction(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonAction(_ sender: AnyObject) {
+        _ = navigationController?.popViewController(animated: true)
     }
 }

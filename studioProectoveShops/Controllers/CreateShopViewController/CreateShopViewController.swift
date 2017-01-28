@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import CoreLocation
 
 class CreateShopViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate {
     
@@ -21,7 +22,7 @@ class CreateShopViewController: UIViewController, UIPickerViewDataSource, UIPick
     
     static func controllerFromStoryboard() -> CreateShopViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewControllerWithIdentifier(String(CreateShopViewController)) as! CreateShopViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: CreateShopViewController())) as! CreateShopViewController
         return controller
     }
     
@@ -38,37 +39,37 @@ class CreateShopViewController: UIViewController, UIPickerViewDataSource, UIPick
     
 //    MARK: - UITextFieldDelegate
     
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
 
 //    MARK: - UIPickerViewDataSource
     
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return 100
     }
 
 //    MARK: - UIPickerViewDelegate
     
-    func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let myString = String(row)
-        let myAttribute = [NSForegroundColorAttributeName: UIColor.whiteColor()]
+        let myAttribute = [NSForegroundColorAttributeName: UIColor.white]
         let myAttrString = NSAttributedString(string: myString, attributes: myAttribute)
         return myAttrString
     }
     
 //    MARK: - Actions
     
-    @IBAction func backButtonAction(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonAction(_ sender: AnyObject) {
+        _ = navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func tryToGetLocationFromAddress(sender: AnyObject) {
+    @IBAction func tryToGetLocationFromAddress(_ sender: AnyObject) {
         print("tryToGetLocationFromAddress")
         let geocoder = CLGeocoder()
         geocoder.geocodeAddressString(addressTextField.text!) { (placemarks, error) in
@@ -76,20 +77,20 @@ class CreateShopViewController: UIViewController, UIPickerViewDataSource, UIPick
                 router().displayAlertTitle("Sorry", message: "We can't find address")
                 return
             }
-            for (_, placemark) in placemarks.enumerate() {
+            for (_, placemark) in placemarks.enumerated() {
                 let lat = String(placemark.location!.coordinate.latitude)
                 let lon = String(placemark.location!.coordinate.longitude)
                 self.shopLocation = placemark.location
                 print("coordinate lon = \(lon), lat = \(lat)")
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async {
                     self.latLabel.text = lat
                     self.lonLabel.text = lon
-                })
+                }
             }
         }
     }
     
-    @IBAction func getCurrentLocationAction(sender: AnyObject) {
+    @IBAction func getCurrentLocationAction(_ sender: AnyObject) {
         if let helpLocation = LocationManager.sharedInstance.currentLocation {
             shopLocation = helpLocation
             let lat = String(helpLocation.coordinate.latitude)
@@ -100,22 +101,22 @@ class CreateShopViewController: UIViewController, UIPickerViewDataSource, UIPick
         }
     }
     
-    @IBAction func createShopButtonAction(sender: AnyObject) {
+    @IBAction func createShopButtonAction(_ sender: AnyObject) {
         print("createShopButtonAction")
         guard let currentLocation = shopLocation else {
             router().displayAlertTitle("Sorry", message: "Location hasn't been selected")
             return
         }
-        guard let shopName = shopNameTextField.text where shopName.characters.count > 0 else {
+        guard let shopName = shopNameTextField.text, shopName.characters.count > 0 else {
             router().displayAlertTitle("Sorry", message: "Input shop name")
             return
         }
         
         let lat = Float(currentLocation.coordinate.latitude)
         let lon = Float(currentLocation.coordinate.longitude)
-        let planFrequancy = planFrequancyPicker.selectedRowInComponent(0)
+        let planFrequancy = planFrequancyPicker.selectedRow(inComponent: 0)
         
-        ShopsManager.sharedInstance.createNewShopName(shopName, lastVisitDate: NSDate(), lat:lat , lon: lon, planFrequency: planFrequancy) { (isSuccess) in
+        ShopsManager.sharedInstance.createNewShopName(shopName, lastVisitDate: Date(), lat:lat , lon: lon, planFrequency: planFrequancy) { (isSuccess) in
             router().displayAlertTitle("Success", message: "Shop has been created successfully")
         }
         

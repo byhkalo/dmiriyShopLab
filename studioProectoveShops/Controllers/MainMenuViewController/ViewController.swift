@@ -24,22 +24,22 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func mapButtonAction(sender: AnyObject) {
+    @IBAction func mapButtonAction(_ sender: AnyObject) {
         print("mapButtonAction")
         navigationController?.pushViewController(TaskTodayViewController.controllerFromStoryboard(), animated: true)
     }
     
-    @IBAction func orderListButtonAction(sender: AnyObject) {
+    @IBAction func orderListButtonAction(_ sender: AnyObject) {
         print("orderListButtonAction")
         navigationController?.pushViewController(OrdersListViewController.controllerFromStoryboard(), animated: true)
     }
     
-    @IBAction func shopsListButtonAction(sender: AnyObject) {
+    @IBAction func shopsListButtonAction(_ sender: AnyObject) {
         print("shopsListButtonAction")
         navigationController?.pushViewController(ShopsListViewController.controllerFromStoryboard(), animated: true)
     }
     
-    @IBAction func logoutAction(sender: AnyObject) {
+    @IBAction func logoutAction(_ sender: AnyObject) {
         print("shopsListButtonAction")
         try! FIRAuth.auth()!.signOut()
         router().showSignInController()

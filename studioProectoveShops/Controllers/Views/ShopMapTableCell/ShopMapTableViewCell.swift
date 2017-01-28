@@ -20,20 +20,20 @@ class ShopMapTableViewCell: UITableViewCell {
         // Initialization code
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
     }
     
-    func fillByModel(model: ShopModel, distance: Float) {
+    func fillByModel(_ model: ShopModel, distance: Float) {
         shopNameLabel.text = model.name
         frequencyLabel.text = String(model.planFrequency)
         lastVisitDateLabel.text = Converter.prettySringFromDate(model.lastVisitDate)
         distanceLabel.text = String(distance)
     }
     
-    @IBAction func locationButtonAction(sender: AnyObject) {
+    @IBAction func locationButtonAction(_ sender: AnyObject) {
         
         print("locationButtonAction")
         

@@ -8,7 +8,7 @@
 
 import UIKit
 import Foundation
-import ReactiveCocoa
+import ReactiveSwift
 
 class OrdersListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -18,7 +18,7 @@ class OrdersListViewController: UIViewController, UITableViewDataSource, UITable
     
     static func controllerFromStoryboard() -> OrdersListViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewControllerWithIdentifier(String(OrdersListViewController)) as! OrdersListViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: OrdersListViewController())) as! OrdersListViewController
         return controller
     }
     
@@ -39,18 +39,18 @@ class OrdersListViewController: UIViewController, UITableViewDataSource, UITable
     
     //    MARK: - UITableViewDataSource
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ordersArray?.count ?? 0
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let simpleTableIdentifier = "OrderTableViewCell";
         
-        var cell = tableView.dequeueReusableCellWithIdentifier(simpleTableIdentifier) as? OrderTableViewCell
+        var cell = tableView.dequeueReusableCell(withIdentifier: simpleTableIdentifier) as? OrderTableViewCell
         if (cell == nil) {
-            let nib = NSBundle.mainBundle().loadNibNamed(simpleTableIdentifier, owner: self, options: nil)
-            cell = nib.first as? OrderTableViewCell
+            let nib = Bundle.main.loadNibNamed(simpleTableIdentifier, owner: self, options: nil)
+            cell = nib?.first as? OrderTableViewCell
         }
         
         cell?.fillByModel(ordersArray![indexPath.row])
@@ -61,18 +61,18 @@ class OrdersListViewController: UIViewController, UITableViewDataSource, UITable
     
     //    MARK: - UITableViewDelegate
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
     }
     
     //    MARK: - Sort func
     
-    func sortedOrdersArrayByCreateDate(ordersArray: [OrderModel]) -> [OrderModel] {
+    func sortedOrdersArrayByCreateDate(_ ordersArray: [OrderModel]) -> [OrderModel] {
         
         var sortOrders = ordersArray
         
-        sortOrders.sortInPlace { (firstOrder, secondOrder) -> Bool in
-            return firstOrder.createDate.compare(secondOrder.createDate) == NSComparisonResult.OrderedDescending
+        sortOrders.sort { (firstOrder, secondOrder) -> Bool in
+            return firstOrder.createDate.compare(secondOrder.createDate as Date) == ComparisonResult.orderedDescending
         }
         
         return sortOrders
@@ -80,11 +80,11 @@ class OrdersListViewController: UIViewController, UITableViewDataSource, UITable
     
     //    MARK: - Actions
     
-    @IBAction func backButtonAction(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonAction(_ sender: AnyObject) {
+        _ = navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func addOrderButtonAction(sender: AnyObject) {
+    @IBAction func addOrderButtonAction(_ sender: AnyObject) {
         navigationController?.pushViewController(CreateOrderViewController.controllerFromStoryboard(), animated: true)
     }
 }

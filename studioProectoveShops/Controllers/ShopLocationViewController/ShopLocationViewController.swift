@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class ShopLocationViewController: UIViewController, MKMapViewDelegate {
     
@@ -20,7 +21,7 @@ class ShopLocationViewController: UIViewController, MKMapViewDelegate {
     
     static func controllerFromStoryboard() -> ShopLocationViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewControllerWithIdentifier(String(ShopLocationViewController)) as! ShopLocationViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: ShopLocationViewController())) as! ShopLocationViewController
         return controller
     }
     
@@ -43,13 +44,13 @@ class ShopLocationViewController: UIViewController, MKMapViewDelegate {
             
             let userCoordinate = shopLocation.coordinate
             let eyeCoordinate = shopLocation.coordinate
-            let mapCamera = MKMapCamera(lookingAtCenterCoordinate: userCoordinate, fromEyeCoordinate: eyeCoordinate, eyeAltitude: 2000.0)
+            let mapCamera = MKMapCamera(lookingAtCenter: userCoordinate, fromEyeCoordinate: eyeCoordinate, eyeAltitude: 2000.0)
             mapView.camera = mapCamera
         }
     }
     
     //    MARK: - Actions
-    @IBAction func backButtonAction(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonAction(_ sender: AnyObject) {
+        _ = navigationController?.popViewController(animated: true)
     }
 }

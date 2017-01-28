@@ -8,7 +8,7 @@
 
 import UIKit
 
-typealias SelectProductsBlock = (productModels: [String: NSNumber]) -> ()
+typealias SelectProductsBlock = (_ productModels: [String: NSNumber]) -> ()
 
 class SelectProductViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
 
@@ -29,7 +29,7 @@ class SelectProductViewController: UIViewController, UITableViewDataSource, UITa
     
     static func controllerFromStoryboard() -> SelectProductViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewControllerWithIdentifier(String(SelectProductViewController)) as! SelectProductViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: SelectProductViewController())) as! SelectProductViewController
         return controller
     }
     
@@ -45,36 +45,36 @@ class SelectProductViewController: UIViewController, UITableViewDataSource, UITa
     
     //    MARK: - UISearchBarDelegate
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         findProduct()
     }
     
-    func searchBarResultsListButtonClicked(searchBar: UISearchBar) {
+    func searchBarResultsListButtonClicked(_ searchBar: UISearchBar) {
         findProduct()
     }
     
     //    MARK: - UITableViewDataSource
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return productsList?.count ?? 0
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let simpleTableIdentifier = "ProductTableViewCell";
-        var cell = tableView.dequeueReusableCellWithIdentifier(simpleTableIdentifier) as? ProductTableViewCell
+        var cell = tableView.dequeueReusableCell(withIdentifier: simpleTableIdentifier) as? ProductTableViewCell
         if (cell == nil) {
-            let nib = NSBundle.mainBundle().loadNibNamed(simpleTableIdentifier, owner: self, options: nil)
-            cell = nib.first as? ProductTableViewCell
+            let nib = Bundle.main.loadNibNamed(simpleTableIdentifier, owner: self, options: nil)
+            cell = nib?.first as? ProductTableViewCell
         }
         
         let product = productsList![indexPath.row]
         cell?.fillByModel(product)
         
-        if let countGet = (currentOrder[product.identifier])?.integerValue {
+        if let countGet = (currentOrder[product.identifier])?.intValue {
             cell?.countGetTextField.text = String(countGet)
             cell?.setSelectedCell(true)
         } else if let previousBigOrder = previousBigOrder {
-            if let countGet = (previousBigOrder[product.identifier])?.integerValue {
+            if let countGet = (previousBigOrder[product.identifier])?.intValue {
                 cell?.countGetTextField.text = String(countGet)
                 cell?.setSelectedCell(false)
             } else {
@@ -89,12 +89,12 @@ class SelectProductViewController: UIViewController, UITableViewDataSource, UITa
         cell!.stateChangedBlock = {(isSelected, selectedCount) -> () in
             if isSelected {
                 if selectedCount > 0 {
-                    self.currentOrder[(cell?.productModel.identifier)!] = NSNumber(integer: selectedCount)
+                    self.currentOrder[(cell?.productModel.identifier)!] = NSNumber(value: selectedCount as Int)
                 } else {
-                    self.currentOrder.removeValueForKey((cell?.productModel.identifier)!)
+                    self.currentOrder.removeValue(forKey: (cell?.productModel.identifier)!)
                 }
             } else {
-                self.currentOrder.removeValueForKey((cell?.productModel.identifier)!)
+                self.currentOrder.removeValue(forKey: (cell?.productModel.identifier)!)
             }
         }
             
@@ -103,8 +103,8 @@ class SelectProductViewController: UIViewController, UITableViewDataSource, UITa
     
     //    MARK: - UITableViewDelegate
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     //    MARK: - Get Shop Functions
@@ -138,7 +138,7 @@ class SelectProductViewController: UIViewController, UITableViewDataSource, UITa
     //    MARK: - Sort func
     
     func fetchPreviousBigOrder() {
-        guard let helpShopModel = shopModel where helpShopModel.orderArray != nil else {
+        guard let helpShopModel = shopModel, helpShopModel.orderArray != nil else {
             return
         }
         
@@ -149,7 +149,7 @@ class SelectProductViewController: UIViewController, UITableViewDataSource, UITa
         
                 for (keyProductID, productCount) in orderDict {
                     if let comparingValue = largeSumOfOrders[keyProductID] {
-                        largeSumOfOrders[keyProductID] = comparingValue.integerValue < productCount.integerValue ? productCount : comparingValue
+                        largeSumOfOrders[keyProductID] = comparingValue.intValue < productCount.intValue ? productCount : comparingValue
                     } else {
                         largeSumOfOrders[keyProductID] = productCount
                     }
@@ -162,7 +162,7 @@ class SelectProductViewController: UIViewController, UITableViewDataSource, UITa
         }
     }
     
-    func sortedProductsArrayByLatestOrder(productsArray: [ProductModel]) -> [ProductModel] {
+    func sortedProductsArrayByLatestOrder(_ productsArray: [ProductModel]) -> [ProductModel] {
         
         if let previousBigOrder = previousBigOrder{
             var arrayWithLastOrdersModels = [ProductModel]()
@@ -176,7 +176,7 @@ class SelectProductViewController: UIViewController, UITableViewDataSource, UITa
                 }
             }
             
-            arrayWithLastOrdersModels.appendContentsOf(arrayWithoutOrders)
+            arrayWithLastOrdersModels.append(contentsOf: arrayWithoutOrders)
             
             return arrayWithLastOrdersModels
             
@@ -187,16 +187,16 @@ class SelectProductViewController: UIViewController, UITableViewDataSource, UITa
     
     //    MARK: - Actions
     
-    @IBAction func backButtonAction(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonAction(_ sender: AnyObject) {
+        _ = navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func selectProductsAction(sender: AnyObject) {
+    @IBAction func selectProductsAction(_ sender: AnyObject) {
         if currentOrder.count > 0 {
             if let selectBlock = selectBlock {
-                selectBlock(productModels: currentOrder)
+                selectBlock(currentOrder)
             }
-            navigationController?.popViewControllerAnimated(true)
+            _ = navigationController?.popViewController(animated: true)
         } else {
             router().displayAlertTitle("Sorry", message: "Please, select product from list")
         }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import ReactiveSwift
 import ReactiveCocoa
 import Result
 
@@ -19,18 +20,18 @@ class SignUpViewModel {
     let passwordText = MutableProperty<String>("")
     let confirmPasswordText = MutableProperty<String>("")
     let enabledSignUpButton = MutableProperty<Bool>(false)
-    var buttonSignInPressSignal :RACSignal? {
+    var buttonSignInPressSignal :CocoaAction<Any>? {
         didSet {
             buttonSignInSignalConfigurate()
         }
     }
-    var buttonSignUpPressSignal :RACSignal? {
+    var buttonSignUpPressSignal :CocoaAction<Any>? {
         didSet {
             buttonSignUpSignalConfigurate()
         }
     }
     
-    private let authManager: AuthManager
+    fileprivate let authManager: AuthManager
     
     //MARK: - Initialization
     
@@ -42,30 +43,30 @@ class SignUpViewModel {
     //MARK: - AuthMethod Registration
     
     func buttonSignUpSignalConfigurate() {
-        buttonSignUpPressSignal!.subscribeNext({ (anyObject) in
-            self.authManager
-                .signalForRegisterUserByEmail(self.emailText.value,
-                    password: self.passwordText.value,
-                    userName: "dsfs")
-                .on(failed: { (error) in router().displayAlertTitle("Error", message: "please check internet connection") },
-                    next: { (user) in router().showBlogTabBarController() })
-                .start()
-        })
+//        buttonSignUpPressSignal!.subscribeNext({ (anyObject) in
+//            self.authManager
+//                .signalForRegisterUserByEmail(self.emailText.value,
+//                    password: self.passwordText.value,
+//                    userName: "dsfs")
+//                .on(failed: { (error) in router().displayAlertTitle("Error", message: "please check internet connection") },
+//                    next: { (user) in router().showBlogTabBarController() })
+//                .start()
+//        })
     }
     
     //MARK: - Switch to SignIn controller
     
     func buttonSignInSignalConfigurate() {
-        buttonSignInPressSignal!.subscribeNext({ (anyObject) in
-            router().showSignInController()
-            print("Button SignIn pressed")
-        })
+//        buttonSignInPressSignal!.subscribeNext({ (anyObject) in
+//            router().showSignInController()
+//            print("Button SignIn pressed")
+//        })
     }
     
     //MARK: - Verification
     
     func enabledOnVerify() -> Signal<Bool, NoError> {
-        return combineLatest(usernameVerifSignal(), emailVerifSignal(), passVerifSignal(), confirmPassVerifSignal())
+        return Signal.combineLatest(usernameVerifSignal(), emailVerifSignal(), passVerifSignal(), confirmPassVerifSignal())
             .map { $0 == true && $1 == true && $2 == true && $3 == true }
     }
     

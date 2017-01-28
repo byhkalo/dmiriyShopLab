@@ -7,31 +7,35 @@
 //
 
 import UIKit
-import ReactiveCocoa
+import ReactiveSwift
 import Result
 
 class SignInViewController: UIViewController {
     
-    var mainView : SignInView? {
+    var mainView : SignInView! {
         return self.view as? SignInView
     }
-    var viewModel: SignInViewModel = SignInViewModel(authManager: AuthManager.sharedInstance)
     
     //MARK: - Loading View
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindProperties()
+        
     }
     
-    //MARK: - Bindings
-    
-    func bindProperties() {
-        mainView!.passwordField.rac_secureTextEntry <~ mainView!.switchView.rac_newOnChannel
-        mainView!.signInButton.rac_enabled <~ viewModel.enabledSignInButton
-        viewModel.emailText <~ mainView!.emailField.rac_textKB
-        viewModel.passwordText <~ mainView!.passwordField.rac_textKB
-        viewModel.buttonSignInPressSignal = self.mainView?.signInButton.rac_buttonTouchUpInside
-        viewModel.buttonSignUpPressSignal = self.mainView?.signUnButton.rac_buttonTouchUpInside
+    @IBAction func signInButtonPressed(_ sender: UIButton) {
+        
+        AuthManager.sharedInstance
+            .signalForAuthByEmail(mainView.emailField.text!, password: mainView.emailField.text!)
+            .on(starting: { (userAuth) in router().showBlogTabBarController() },
+                failed: { (error) in router().displayAlertTitle("Error", message: "please check emain and password") })
+            .start()
+
     }
+    
+    @IBAction func signUpButtonPressed(_ sender: UIButton) {
+        router().showSignUpController()
+        print("Button SignUp pressed")
+    }
+    
 }

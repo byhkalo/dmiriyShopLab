@@ -12,7 +12,7 @@ extension Array {
 
     // See Swiftz: https://github.com/typelift/Swiftz/blob/master/Swiftz/ArrayExt.swift#L214
     /// Safely indexes into an array by converting out of bounds errors to nils.
-    public func safeIndex(i : Int) -> Element? {
+    public func safeIndex(_ i : Int) -> Element? {
         if i < self.count && i >= 0 {
             return self[i]
         } else {

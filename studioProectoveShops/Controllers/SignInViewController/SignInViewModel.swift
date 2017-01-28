@@ -7,29 +7,15 @@
 //
 
 import Foundation
-import ReactiveCocoa
+import ReactiveSwift
 import Result
 
 class SignInViewModel {
     
-    //MARK: - Properties
-    
-    let emailText = MutableProperty<String>("")
-    let passwordText = MutableProperty<String>("")
-    let enabledSignInButton = MutableProperty<Bool>(false)
-    var buttonSignInPressSignal :RACSignal? {
-        didSet {
-            buttonSignInSignalConfigurate()
-        }
-    }
-    var buttonSignUpPressSignal :RACSignal? {
-        didSet {
-            buttonSignUpSignalConfigurate()
-        }
     }
     
     
-    private let authManager: AuthManager
+    fileprivate let authManager: AuthManager
     
     //MARK: - Initialization
     
@@ -62,7 +48,7 @@ class SignInViewModel {
     //MARK: - Verification
     
     func enabledOnVerify() -> Signal<Bool, NoError> {
-        return combineLatest(emailVerifSignal(), passVerifSignal())
+        return Signal.combineLatest(emailVerifSignal(), passVerifSignal())
             .map { $0 == true && $1 == true}
     }
     

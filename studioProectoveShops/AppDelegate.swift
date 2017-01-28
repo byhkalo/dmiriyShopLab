@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var router: RouterManager?
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         FIRApp.configure()
         
@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         
-        let blogTabBarController = storyboard.instantiateViewControllerWithIdentifier(String(ViewController))
+        let blogTabBarController = storyboard.instantiateViewController(withIdentifier: String(describing: ViewController()))
         
 //        try! FIRAuth.auth()!.signOut()
         
@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.router = RouterManager(navigationController: navController)
         
-        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.rootViewController = navController
         self.window?.makeKeyAndVisible()
         

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import CoreLocation
 
 class LocationManager: NSObject, CLLocationManagerDelegate {
@@ -14,11 +15,11 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     static let sharedInstance = LocationManager()
     
     let locationManager = CLLocationManager()
-    var previous = NSDecimalNumber.one()
-    var current = NSDecimalNumber.one()
+    var previous = NSDecimalNumber.one
+    var current = NSDecimalNumber.one
     var position: UInt = 1
-    var updateTimer: NSTimer?
-    var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
+    var updateTimer: Timer?
+//    var backgroundTask: UIBackgroundTaskIdentifier = UIBackgroundTaskInvalid
     var currentLocation: CLLocation?
     var secondDelegate: CLLocationManagerDelegate?
     
@@ -27,7 +28,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         
         locationManager.delegate = self
         
-        if CLLocationManager.authorizationStatus() == .NotDetermined {
+        if CLLocationManager.authorizationStatus() == .notDetermined {
             locationManager.requestAlwaysAuthorization()
         }
         triggerLocationServices()
@@ -44,7 +45,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     
     func triggerLocationServices() {
         if CLLocationManager.locationServicesEnabled() {
-            if self.locationManager.respondsToSelector(#selector(CLLocationManager.requestWhenInUseAuthorization)) {
+            if self.locationManager.responds(to: #selector(CLLocationManager.requestWhenInUseAuthorization)) {
                 locationManager.requestWhenInUseAuthorization()
             } else {
                 
@@ -56,24 +57,24 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         locationManager.startUpdatingLocation()
     }
     
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         var str: String
         
         switch status {
-        case .NotDetermined:
+        case .notDetermined:
             locationManager.requestAlwaysAuthorization()
             str = "NotDetermined"
             
-        case .AuthorizedWhenInUse:
+        case .authorizedWhenInUse:
             startUpdatingLocation()
             str = "AuthorizedWhenInUse"
             locationManagerAlert()
             
-        case .AuthorizedAlways:
+        case .authorizedAlways:
             startUpdatingLocation()
             str = "AuthorizedAlways"
             
-        case .Restricted, .Denied:
+        case .restricted, .denied:
             locationManagerAlert()
             str = "Restricted"
         }
@@ -81,7 +82,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         print("locationManager auth status changed, \(str)")
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         currentLocation = locations.last
         if let secondDelegate = secondDelegate {
             secondDelegate.locationManager!(manager, didUpdateLocations: locations)
@@ -89,14 +90,14 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     }
     
     func locationManagerAlert() {
-        let alertController = UIAlertController(title: "Background Location Access Disabled", message: "In order to be notified server about missing sessions, please open this app's settings and set location access to 'Always'.", preferredStyle: .Alert)
+        let alertController = UIAlertController(title: "Background Location Access Disabled", message: "In order to be notified server about missing sessions, please open this app's settings and set location access to 'Always'.", preferredStyle: .alert)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addAction(cancelAction)
         
-        let openAction = UIAlertAction(title: "Open Settings", style: .Default) { (action) in
+        let openAction = UIAlertAction(title: "Open Settings", style: .default) { (action) in
             if let url = NSURL(string: UIApplicationOpenSettingsURLString) {
-                UIApplication.sharedApplication().openURL(url)
+                UIApplication.shared.openURL(url as URL)
             }
         }
         alertController.addAction(openAction)

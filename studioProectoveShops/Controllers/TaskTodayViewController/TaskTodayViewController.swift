@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class TaskTodayViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -17,7 +18,7 @@ class TaskTodayViewController: UIViewController, UITableViewDataSource, UITableV
     
     static func controllerFromStoryboard() -> TaskTodayViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewControllerWithIdentifier(String(TaskTodayViewController)) as! TaskTodayViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: TaskTodayViewController())) as! TaskTodayViewController
         return controller
     }
     
@@ -32,16 +33,16 @@ class TaskTodayViewController: UIViewController, UITableViewDataSource, UITableV
     
     //    MARK: - UITableViewDataSource
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return shopsArray?.count ?? 0
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let simpleTableIdentifier = "ShopMapTableViewCell";
-        var cell = tableView.dequeueReusableCellWithIdentifier(simpleTableIdentifier) as? ShopMapTableViewCell
+        var cell = tableView.dequeueReusableCell(withIdentifier: simpleTableIdentifier) as? ShopMapTableViewCell
         if (cell == nil) {
-            let nib = NSBundle.mainBundle().loadNibNamed(simpleTableIdentifier, owner: self, options: nil)
-            cell = nib.first as? ShopMapTableViewCell
+            let nib = Bundle.main.loadNibNamed(simpleTableIdentifier, owner: self, options: nil)
+            cell = nib?.first as? ShopMapTableViewCell
         }
         let shop = shopsArray![indexPath.row]
         
@@ -50,7 +51,7 @@ class TaskTodayViewController: UIViewController, UITableViewDataSource, UITableV
         
         if let selectedShop = selectedShop {
             if selectedShop.identifier == shopsArray![indexPath.row].identifier {
-                tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
+                tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
             }
         }
         
@@ -59,8 +60,8 @@ class TaskTodayViewController: UIViewController, UITableViewDataSource, UITableV
     
     //    MARK: - UITableViewDelegate
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
         selectedShop = shopsArray![indexPath.row]
         let destShop = shopsArray![indexPath.row]
@@ -93,19 +94,19 @@ class TaskTodayViewController: UIViewController, UITableViewDataSource, UITableV
     }
     //    MARK: - Sort func
     
-    func sortedShopsArrayByNearestLocation(shopsArray: [ShopModel]) -> [ShopModel] {
+    func sortedShopsArrayByNearestLocation(_ shopsArray: [ShopModel]) -> [ShopModel] {
         
         var validShops = [ShopModel]()
         
         for shopModel in shopsArray {
             var lastVisitDay = Converter.dateFromDayString(Converter.daySringFromDate(shopModel.lastVisitDate))
-            lastVisitDay = lastVisitDay?.dateByAddingTimeInterval(24 * 60 * 60 * Double(shopModel.planFrequency))
-            if NSDate().dateByAddingTimeInterval(24 * 60 * 60 * 2).compare(lastVisitDay!) == NSComparisonResult.OrderedDescending {
+            lastVisitDay = lastVisitDay?.addingTimeInterval(24 * 60 * 60 * Double(shopModel.planFrequency))
+            if Date().addingTimeInterval(24 * 60 * 60 * 2).compare(lastVisitDay!) == ComparisonResult.orderedDescending {
                 validShops.append(shopModel)
             }
         }
         
-        func findNearestShopToLocation(sourceLocation: CLLocation) -> ShopModel? {
+        func findNearestShopToLocation(_ sourceLocation: CLLocation) -> ShopModel? {
             guard validShops.count > 0 else {
                 return nil
             }
@@ -116,21 +117,21 @@ class TaskTodayViewController: UIViewController, UITableViewDataSource, UITableV
             for shop in validShops {
                 let destLocation = CLLocation(latitude: Double(shop.lat), longitude: Double(shop.lon))
                 if distance == nil {
-                    distance = sourceLocation.distanceFromLocation(destLocation)
+                    distance = sourceLocation.distance(from: destLocation)
                 }
                 
-                print("search distance \(sourceLocation.distanceFromLocation(destLocation))")
+                print("search distance \(sourceLocation.distance(from: destLocation))")
                 
-                if sourceLocation.distanceFromLocation(destLocation) <= distance! {
-                    distance = sourceLocation.distanceFromLocation(destLocation)
+                if sourceLocation.distance(from: destLocation) <= distance! {
+                    distance = sourceLocation.distance(from: destLocation)
                     nearestShop = shop
                 }
             }
             
             print("distance between locations \(distance)\n\n")
             
-            validShops.removeAtIndex(validShops.indexOf(nearestShop)!)
-            distanceDictionary[nearestShop.identifier] = NSNumber(float: Float(distance!))
+            validShops.remove(at: validShops.index(of: nearestShop)!)
+            distanceDictionary[nearestShop.identifier] = NSNumber(value: Float(distance!))
             return nearestShop
         }
         
@@ -165,8 +166,8 @@ class TaskTodayViewController: UIViewController, UITableViewDataSource, UITableV
     
     //    MARK: - Actions
     
-    @IBAction func backButtonAction(sender: AnyObject) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonAction(_ sender: AnyObject) {
+        _ = navigationController?.popViewController(animated: true)
     }
     
 }

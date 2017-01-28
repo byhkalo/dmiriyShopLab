@@ -10,39 +10,43 @@ import Foundation
 import UIKit
 import SystemConfiguration
 
-func base64StringFromImage(image: UIImage) -> String {
-    var data: NSData = NSData()
+func base64StringFromImage(_ image: UIImage) -> String {
+    var data: Data = Data()
     data = UIImageJPEGRepresentation(image, 0.1)!
-    let base64String = data.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
+    let base64String = data.base64EncodedString(options: NSData.Base64EncodingOptions.lineLength64Characters)
     return base64String
 }
 
-func formatDate(date: NSDate) -> String {
-    let dateFormatter = NSDateFormatter()
-    dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
-    let dateString = dateFormatter.stringFromDate(date)
+func formatDate(_ date: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateStyle = DateFormatter.Style.medium
+    let dateString = dateFormatter.string(from: date)
     return dateString
 }
 
 func router() -> RouterManager {
-    let delegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let delegate = UIApplication.shared.delegate as! AppDelegate
     return delegate.router!
 }
 
-func stringIsValidEmail(checkString: String) -> Bool {
+func stringIsValidEmail(_ checkString: String) -> Bool {
     let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
     
     let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-    return emailTest.evaluateWithObject(checkString)
+    return emailTest.evaluate(with: checkString)
 }
 
 func isConnectedToNetwork() -> Bool {
     var zeroAddress = sockaddr_in()
-    zeroAddress.sin_len = UInt8(sizeofValue(zeroAddress))
+    zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
     zeroAddress.sin_family = sa_family_t(AF_INET)
-    let defaultRouteReachability = withUnsafePointer(&zeroAddress) {
-        SCNetworkReachabilityCreateWithAddress(nil, UnsafePointer($0))
+    
+    let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+        $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
+            SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+        }
     }
+    
     var flags = SCNetworkReachabilityFlags()
     if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
         return false
@@ -57,67 +61,67 @@ struct Converter {
     
     //Make Sring
     
-    static func daySringFromDate(date: NSDate) -> String {
-        let dateFormatter = NSDateFormatter()
+    static func daySringFromDate(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.stringFromDate(date)
+        return dateFormatter.string(from: date)
     }
     
-    static func sringFromDate(date: NSDate) -> String {
-        let dateFormatter = NSDateFormatter()
+    static func sringFromDate(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        return dateFormatter.stringFromDate(date)
+        return dateFormatter.string(from: date)
     }
     
-    static func prettySringFromDate(date: NSDate) -> String {
-        let dateFormatter = NSDateFormatter()
+    static func prettySringFromDate(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy MMM dd"
         
-        return dateFormatter.stringFromDate(date)
+        return dateFormatter.string(from: date)
     }
     
-    static func fullHoursInDate(date: NSDate) -> Int? {
-        let dateFormatter = NSDateFormatter()
+    static func fullHoursInDate(_ date: Date) -> Int? {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "H"
         
-        return Int(dateFormatter.stringFromDate(date))
+        return Int(dateFormatter.string(from: date))
     }
     
     //Make date
     
-    static func dateFromString(string: String) -> NSDate? {
-        let dateFormatter = NSDateFormatter()
+    static func dateFromString(_ string: String) -> Date? {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        return dateFormatter.dateFromString(string)
+        return dateFormatter.date(from: string)
     }
     
-    static func dateFromDayString(string: String) -> NSDate? {
-        let dateFormatter = NSDateFormatter()
+    static func dateFromDayString(_ string: String) -> Date? {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.dateFromString(string)
+        return dateFormatter.date(from: string)
     }
     
-    static func dateWithParams(hours: Int, minutes: Int, seconds: Int, byDay: NSDate) -> NSDate? {
+    static func dateWithParams(_ hours: Int, minutes: Int, seconds: Int, byDay: Date) -> Date? {
         
-        let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian);
-        calendar?.timeZone = (NSTimeZone.localTimeZone())
+        var calendar = Calendar(identifier: Calendar.Identifier.gregorian);
+        calendar.timeZone = (TimeZone.autoupdatingCurrent)
         
-        let unitFlags: NSCalendarUnit = [.Day, .Month, .Year]
+        let unitFlags: NSCalendar.Unit = [.day, .month, .year]
         
-        let dateComponents = calendar?.components(unitFlags, fromDate: NSDate());
+        var dateComponents = (calendar as NSCalendar?)?.components(unitFlags, from: Date());
         dateComponents?.hour = hours
         dateComponents?.minute = minutes
         dateComponents?.second = seconds
         
         //return date relative from date
-        return calendar?.dateFromComponents(dateComponents!)
+        return calendar.date(from: dateComponents!)
     }
     
-    static func convertToHeightUsingFeet(feet: Int, inches: Int) -> Int {
+    static func convertToHeightUsingFeet(_ feet: Int, inches: Int) -> Int {
         return (feet * 12 + inches)
     }
     
-    static func convertToFeetInchUseHeight(height: Int) -> (feet: Int, inches: Int) {
+    static func convertToFeetInchUseHeight(_ height: Int) -> (feet: Int, inches: Int) {
         if height > 0 {
             let feet = Int(height / 12)
             let inches = height % 12

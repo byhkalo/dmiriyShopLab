@@ -8,43 +8,43 @@
 
 
 import Foundation
-import ReactiveCocoa
+import ReactiveSwift
 import Firebase
 import FirebaseAuth
 
 class AuthManager {    
     static let sharedInstance = AuthManager()
     
-    func signalForAuthByEmail(email: String, password: String) -> SignalProducer <FIRUser, NSError> {
+    func signalForAuthByEmail(_ email: String, password: String) -> SignalProducer <FIRUser, NSError> {
         return SignalProducer { (sink, disposable) -> () in
-            FIRAuth.auth()?.signInWithEmail(email, password: password, completion: { (userSign, error) in
+            FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (userSign, error) in
                 if error != nil {
-                    sink.sendFailed(error!)
+                    sink.send(error: error as! NSError)
                 } else {
-                    sink.sendNext(userSign!)
+                    sink.send(value: userSign!)
                     sink.sendCompleted()
                 }
             })
         }
     }
     
-    func signalForRegisterUserByEmail(email: String, password: String, userName: String) -> SignalProducer <FIRUser, NSError> {
+    func signalForRegisterUserByEmail(_ email: String, password: String, userName: String) -> SignalProducer <FIRUser, NSError> {
         return SignalProducer { (sink, disposable) -> () in
-            FIRAuth.auth()?.createUserWithEmail(email, password: password,
+            FIRAuth.auth()?.createUser(withEmail: email, password: password,
                 completion: { (newUser, error) in
                     if error != nil {
-                        sink.sendFailed(error!)
+                        sink.send(error: error as! NSError)
                     }
                     
                     // save usertName
                     if let user = newUser {
                         let changeRequest = user.profileChangeRequest()
                         changeRequest.displayName = userName
-                        changeRequest.commitChangesWithCompletion { errorChange in
+                        changeRequest.commitChanges { errorChange in
                             if errorChange != nil {
-                                sink.sendFailed(error!)
+                                sink.send(error: error as! NSError)
                             } else {
-                                sink.sendNext(newUser!)
+                                sink.send(value: newUser!)
                                 sink.sendCompleted()
                             }
                         }
