@@ -42,4 +42,23 @@ struct Constants {
     struct Cell {
         static let cellIdentifier = "PostCell"
     }
+    
+    struct UserProperties {
+        static let UserId = "userId"
+        static let DisplayName = "displayName"
+        static let SupervisorID = "supervisorID"
+        static let ShopsList = "shopsList"
+        static let OrdersList = "ordersList"
+        static let Location = "location"
+        static let Lat = "lat"
+        static let Lon = "lon"
+        static let PlanList = "dayShopsPlan"
+    }
+    
+    struct DayShopsPlan {
+        static let UserId = "userID"
+        static let Date = "date"
+        static let ShopsList = "shopsList"
+    }
+    
 }

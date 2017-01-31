@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         
-        let blogTabBarController = storyboard.instantiateViewController(withIdentifier: String(describing: ViewController()))
+        let blogTabBarController = storyboard.instantiateViewController(withIdentifier: String(describing: ViewController.classForCoder()))
         
 //        try! FIRAuth.auth()!.signOut()
         

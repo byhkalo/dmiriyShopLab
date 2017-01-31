@@ -21,7 +21,7 @@ class ShopLocationViewController: UIViewController, MKMapViewDelegate {
     
     static func controllerFromStoryboard() -> ShopLocationViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: ShopLocationViewController())) as! ShopLocationViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: ShopLocationViewController.classForCoder())) as! ShopLocationViewController
         return controller
     }
     

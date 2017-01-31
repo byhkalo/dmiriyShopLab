@@ -29,7 +29,7 @@ class SelectProductViewController: UIViewController, UITableViewDataSource, UITa
     
     static func controllerFromStoryboard() -> SelectProductViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: SelectProductViewController())) as! SelectProductViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: SelectProductViewController.classForCoder())) as! SelectProductViewController
         return controller
     }
     

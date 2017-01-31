@@ -44,7 +44,7 @@ class CreateOrderViewController: UIViewController, UITableViewDataSource, UITabl
     
     static func controllerFromStoryboard() -> CreateOrderViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: CreateOrderViewController())) as! CreateOrderViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: CreateOrderViewController.classForCoder())) as! CreateOrderViewController
         return controller
     }
     

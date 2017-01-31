@@ -176,6 +176,9 @@
                             <rect key="frame" x="10" y="157" width="51" height="31"/>
                             <color key="onTintColor" red="1" green="0.29411764709999999" blue="0.23137254900000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <color key="thumbTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="switchWalueChanged:" destination="-1" eventType="valueChanged" id="6Vp-TD-9ri"/>
+                            </connections>
                         </switch>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="example@email.com" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tf9-tN-OTR">
                             <rect key="frame" x="100" y="37" width="207" height="30"/>

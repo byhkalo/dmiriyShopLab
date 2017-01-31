@@ -18,7 +18,7 @@ class TaskTodayViewController: UIViewController, UITableViewDataSource, UITableV
     
     static func controllerFromStoryboard() -> TaskTodayViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: TaskTodayViewController())) as! TaskTodayViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: TaskTodayViewController.classForCoder())) as! TaskTodayViewController
         return controller
     }
     

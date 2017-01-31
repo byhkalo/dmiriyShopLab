@@ -29,7 +29,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     static func controllerFromStoryboard() -> MapViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: MapViewController())) as! MapViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: MapViewController.classForCoder())) as! MapViewController
         return controller
     }
     
@@ -60,16 +60,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             request.transportType = MKDirectionsTransportType.walking
             
             let directions = MKDirections(request: request)
-            directions.calculate (completionHandler: {
-                (response: MKDirectionsResponse?, error: NSError?) in
+            directions.calculate(completionHandler: {(response, error) in
                 if error == nil {
                     self.showRoute(response!)
                 }
                 else{
                     print("trace the error \(error?.localizedDescription)")
                 }
-            } as! MKDirectionsHandler)
-
+            })
         }
     }
     

@@ -22,7 +22,7 @@ class CreateShopViewController: UIViewController, UIPickerViewDataSource, UIPick
     
     static func controllerFromStoryboard() -> CreateShopViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: CreateShopViewController())) as! CreateShopViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: CreateShopViewController.classForCoder())) as! CreateShopViewController
         return controller
     }
     

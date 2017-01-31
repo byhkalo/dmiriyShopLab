@@ -16,7 +16,7 @@ class ShopsListViewController: UIViewController, UITableViewDataSource, UITableV
     
     static func controllerFromStoryboard() -> ShopsListViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: ShopsListViewController())) as! ShopsListViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: ShopsListViewController.classForCoder())) as! ShopsListViewController
         return controller
     }
     

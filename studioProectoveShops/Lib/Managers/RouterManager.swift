@@ -53,7 +53,7 @@ class RouterManager {
     }
     
     func showBlogTabBarController() {
-        self.presentController(self.createControllerFromStoryboardName("Main", identifier: String(describing: ViewController())))
+        self.presentController(self.createControllerFromStoryboardName("Main", identifier: String(describing: ViewController.classForCoder())))
     }
     
     //MARK: - Show Alerts

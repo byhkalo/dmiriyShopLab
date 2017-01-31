@@ -18,7 +18,7 @@ class OrdersListViewController: UIViewController, UITableViewDataSource, UITable
     
     static func controllerFromStoryboard() -> OrdersListViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: OrdersListViewController())) as! OrdersListViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: OrdersListViewController.classForCoder())) as! OrdersListViewController
         return controller
     }
     

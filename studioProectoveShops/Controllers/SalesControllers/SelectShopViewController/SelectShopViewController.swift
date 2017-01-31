@@ -36,7 +36,7 @@ class SelectShopViewController: UIViewController, UITableViewDataSource, UITable
     
     static func controllerFromStoryboard() -> SelectShopViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: SelectShopViewController())) as! SelectShopViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: String(describing: SelectShopViewController.classForCoder())) as! SelectShopViewController
         return controller
     }
     
