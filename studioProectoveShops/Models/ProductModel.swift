@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseDatabase
 
-class ProductModel: NSObject {
+class ProductModel: NSObject, ModelProtocol {
     
     let identifier: String
     let name: String
@@ -18,11 +18,12 @@ class ProductModel: NSObject {
     let inStorage: Int
     
     convenience init(model: Dictionary<String, AnyObject>) {
-        self.init(identifier: model[Constants.Product.Identifier]! as! String,
-                  name: model[Constants.Product.Name]! as! String,
-                  descriptionProduct: model[Constants.Product.Description]! as! String,
-                  price: (model[Constants.Product.Price]! as! NSNumber).floatValue,
-                  inStorage: (model[Constants.Product.InStorage]! as! NSNumber).intValue)
+        let productProp = Constants.Product.self
+        self.init(identifier            : model[productProp.Identifier]! as! String,
+                  name                  : model[productProp.Name]! as! String,
+                  descriptionProduct    : model[productProp.Description]! as! String,
+                  price                 : (model[productProp.Price]! as! NSNumber).floatValue,
+                  inStorage             : (model[productProp.InStorage]! as! NSNumber).intValue)
     }
     
     convenience init(snapshot: FIRDataSnapshot) {
@@ -39,4 +40,18 @@ class ProductModel: NSObject {
         self.descriptionProduct = descriptionProduct
         self.inStorage = inStorage
     }
+    
+    func dictionaryPresentation() -> Dictionary<String, Any> {
+        let productProp = Constants.Product.self
+        
+        let productDictionary : [String : Any] =
+            [productProp.Identifier   : identifier as AnyObject,
+             productProp.Name         : name as AnyObject,
+             productProp.Price        : NSNumber(value: price),
+             productProp.Description  : descriptionProduct as AnyObject,
+             productProp.InStorage    : NSNumber(value: inStorage)]
+        return productDictionary
+    }
+
+    
 }

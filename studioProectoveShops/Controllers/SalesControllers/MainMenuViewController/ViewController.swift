@@ -39,10 +39,20 @@ class ViewController: UIViewController {
         navigationController?.pushViewController(ShopsListViewController.controllerFromStoryboard(), animated: true)
     }
     
+    @IBAction func planListButtonAction(_ sender: AnyObject) {
+        print("planListButtonAction")
+        UserModel.getCurrentUser { (userModel) in
+            let controller = PlanListSalesViewController.instantiateFromStoryboard()
+            controller.userDetail = userModel
+            DispatchQueue.main.async {
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
+        }
+    }
+    
     @IBAction func logoutAction(_ sender: AnyObject) {
-        print("shopsListButtonAction")
-        try! FIRAuth.auth()!.signOut()
-        router().showSignInController()
+        print("logoutAction")
+        router().logOut()
     }
     
 }

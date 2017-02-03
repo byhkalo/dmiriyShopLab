@@ -12,6 +12,8 @@ struct Constants {
     static let Shops = "shops"
     static let Orders = "orders"
     static let Products = "products"
+    static let Users = "users"
+    static let DayPlans = "dayPlans"
     
     struct Shop {
         static let Name = "name"
@@ -45,6 +47,7 @@ struct Constants {
     
     struct UserProperties {
         static let UserId = "userId"
+        static let IsAdminSupervisor = "isAdmin"
         static let DisplayName = "displayName"
         static let SupervisorID = "supervisorID"
         static let ShopsList = "shopsList"
@@ -53,12 +56,16 @@ struct Constants {
         static let Lat = "lat"
         static let Lon = "lon"
         static let PlanList = "dayShopsPlan"
+        static let SalesList = "salesList"
     }
     
     struct DayShopsPlan {
+        static let Identifier = "identifier"
         static let UserId = "userID"
         static let Date = "date"
         static let ShopsList = "shopsList"
+        static let TotalSum = "totalSum"
+        static let OrdersList = "ordersList"
     }
     
 }

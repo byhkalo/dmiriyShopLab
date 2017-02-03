@@ -37,14 +37,35 @@ class OrdersManager {
         }
     }
     
-    func createNewOrderShopIdentifier(_ shopModel: ShopModel, deliveryDate: Date, createDate: Date, totalPrice: Float, productArray: Dictionary<String, NSNumber>, completionHandler: @escaping (_ isSuccess: Bool) ->()) {
-        let newOrder : [String : AnyObject] = [Constants.Order.ShopModel : shopModel.dictionaryPresentationForOrder() as AnyObject,
-                                              Constants.Order.DeliveryDate : Converter.sringFromDate(deliveryDate) as AnyObject,
-                                              Constants.Order.CreateDate : Converter.sringFromDate(createDate) as AnyObject,
-                                              Constants.Order.TotalPrice : NSNumber(value: totalPrice as Float),
-                                              Constants.Order.OrderElementArray : productArray as AnyObject]
+    func getOrderByID(_ identifier: String) -> SignalProducer <Array<OrderModel>, NSError> {
+        return SignalProducer { (sink, disposable) -> () in
+            self.ref.child(Constants.Orders).child(identifier).observe(FIRDataEventType.value,
+                                                                         with: { (snapshot) in
+                                                                            var orderModels = [OrderModel]()
+                                                                            
+                                                                            let order = OrderModel.init(snapshot: snapshot)
+                                                                            orderModels.append(order)
+                                                                            
+                                                                            sink.send(value: orderModels)
+                                                                            sink.sendCompleted()
+            })
+        }
+    }
+    
+    func createNewOrderShopIdentifier(_ shopModel: ShopModel, deliveryDate: Date, createDate: Date, totalPrice: Float, productArray: Dictionary<String, NSNumber>, dayPlan: DayPlanModel? = nil, completionHandler: @escaping (_ isSuccess: Bool) ->()) {
         
-        self.ref.child(Constants.Orders).childByAutoId().setValue(newOrder) { (error, reference) in
+        let order = OrderModel(identifier: "", shopModel: shopModel, deliveryDate: deliveryDate, createDate: createDate, totalPrice: totalPrice, productArray: productArray)
+        let dictPresentation = order.dictionaryPresentationWithoutId()
+        
+        self.ref.child(Constants.Orders).childByAutoId().setValue(dictPresentation) { (error, reference) in
+            if let dayPlan = dayPlan {
+                let identifier = reference.key
+                self.getOrderByID(identifier)
+                    .on(failed: { print("Error. OrdersManager.swift. LINE 63. Error = \($0)") },
+                        value: { (orderModels) in
+                            dayPlan.addOrders(orderModels)
+                    }).start()
+            }
             completionHandler(error == nil)
         } 
     }

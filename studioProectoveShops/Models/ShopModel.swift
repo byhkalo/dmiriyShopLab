@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseDatabase
 
-class ShopModel: NSObject {
+class ShopModel: NSObject, ModelProtocol {
     
     let name: String
     let identifier: String
@@ -19,7 +19,7 @@ class ShopModel: NSObject {
     let planFrequency: Int
     let orderArray: Dictionary<String, Dictionary<String, NSNumber>>?
     
-    convenience init(model: Dictionary<String, AnyObject>) {
+    convenience init(model: Dictionary<String, Any>) {
         let coordinate = model[Constants.Shop.Coordinate] as! NSDictionary
         self.init(name: model[Constants.Shop.Name]! as! String,
                   identifier: model[Constants.Shop.Identifier]! as! String,
@@ -45,7 +45,7 @@ class ShopModel: NSObject {
         self.orderArray = orderArray
     }
     
-    func dictionaryPresentationForOrder() -> Dictionary<String, Any> {
+    func dictionaryPresentation() -> Dictionary<String, Any> {
         let shopDictionary : [String : Any] = [Constants.Shop.Identifier: identifier as AnyObject,
                                                      Constants.Shop.Name  : name as AnyObject,
                                                      Constants.Shop.LastVisitDate : Converter.sringFromDate(lastVisitDate) as AnyObject,
@@ -53,4 +53,16 @@ class ShopModel: NSObject {
                                                      Constants.Shop.PlanFrequency: NSNumber(value: planFrequency as Int)]
         return shopDictionary
     }
+    
+    class func initArray(snapshotArray: Array<Dictionary<String, Any>>?) -> [ShopModel]?  {
+        if let dictArray = snapshotArray {
+            var shopsArray = [ShopModel]()
+            for helpShopModel in dictArray {
+                shopsArray.append(ShopModel(model: helpShopModel))
+            }
+            return shopsArray
+        }
+        return nil
+    }
+    
 }

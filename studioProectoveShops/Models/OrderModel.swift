@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseDatabase
 
-class OrderModel: NSObject {
+class OrderModel: NSObject, ModelProtocol {
     
     let identifier: String
     let shopModel: ShopModel
@@ -18,7 +18,7 @@ class OrderModel: NSObject {
     let totalPrice: Float?
     let productArray: Dictionary<String, NSNumber>?
     
-    convenience init(model: Dictionary<String, AnyObject>) {
+    convenience init(model: Dictionary<String, Any>) {
         self.init(identifier: model[Constants.Order.Identifier]! as! String,
                   shopModel: ShopModel(model:model[Constants.Order.ShopModel]! as! Dictionary<String, AnyObject>),
                   deliveryDate: Converter.dateFromString(model[Constants.Order.DeliveryDate]! as! String)!,
@@ -28,8 +28,8 @@ class OrderModel: NSObject {
     }
     
     convenience init(snapshot: FIRDataSnapshot) {
-        var value = snapshot.value! as! Dictionary<String, AnyObject>
-        value[Constants.Order.Identifier] = snapshot.key as AnyObject?
+        var value = snapshot.value! as! Dictionary<String, Any>
+        value[Constants.Order.Identifier] = snapshot.key
         self.init(model: value)
     }
     
@@ -42,4 +42,43 @@ class OrderModel: NSObject {
         self.productArray = productArray
         self.totalPrice = totalPrice
     }
+    
+    func dictionaryPresentationWithoutId() -> Dictionary<String, Any> {
+        let orderProp = Constants.Order.self
+        
+        let orderDictionary : [String : AnyObject] =
+            [orderProp.ShopModel : shopModel.dictionaryPresentation() as AnyObject,
+             orderProp.DeliveryDate : Converter.sringFromDate(deliveryDate) as AnyObject,
+             orderProp.CreateDate : Converter.sringFromDate(createDate) as AnyObject,
+             orderProp.TotalPrice : NSNumber(value: totalPrice ?? 0.0 as Float),
+             orderProp.OrderElementArray : productArray as AnyObject]
+        
+        return orderDictionary
+    }
+    
+    func dictionaryPresentation() -> Dictionary<String, Any> {
+        let orderProp = Constants.Order.self
+        
+        let orderDictionary : [String : AnyObject] =
+            [orderProp.Identifier   : identifier as AnyObject,
+             orderProp.ShopModel    : shopModel.dictionaryPresentation() as AnyObject,
+             orderProp.DeliveryDate : Converter.sringFromDate(deliveryDate) as AnyObject,
+             orderProp.CreateDate   : Converter.sringFromDate(createDate) as AnyObject,
+             orderProp.TotalPrice   : NSNumber(value: totalPrice ?? 0.0 as Float),
+             orderProp.OrderElementArray : productArray as AnyObject]
+        
+        return orderDictionary
+    }
+    
+    class func initArray(snapshotArray: Array<Dictionary<String, Any>>?) -> [OrderModel]?  {
+        if let snapDictArray = snapshotArray {
+            var ordersArray = [OrderModel]()
+            for helpOrderModel in snapDictArray {
+                ordersArray.append(OrderModel(model: helpOrderModel))
+            }
+            return ordersArray
+        }
+        return nil
+    }
+    
 }

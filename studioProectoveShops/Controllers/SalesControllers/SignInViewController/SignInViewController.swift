@@ -25,11 +25,18 @@ class SignInViewController: UIViewController {
     
     @IBAction func signInButtonPressed(_ sender: UIButton) {
         AuthManager.sharedInstance
-            .signalForAuthByEmail(mainView.emailField.text!, password: mainView.emailField.text!)
+            .signalForAuthByEmail(mainView.emailField.text!, password: mainView.passwordField.text!)
             .on(failed: { (error) in
-                router().displayAlertTitle("Error", message: "please check emain and password")
+                router().displayAlertTitle("Error", message: "please check emain and password \n Error: \(error)")
             }) { (authUser) in
-                router().showBlogTabBarController()
+                UserModel.getCurrentUser(volunteer: { (helpUserModel) in
+                    if helpUserModel.isAdminSupervisor {
+                        router().showSupervisorMenuViewController()
+                    } else {
+                        router().showBlogTabBarController()
+                    }
+                })
+                
             }.start()
     }
     

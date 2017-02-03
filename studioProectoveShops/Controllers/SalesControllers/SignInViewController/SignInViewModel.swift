@@ -8,12 +8,10 @@
 
 import Foundation
 import ReactiveSwift
+import ReactiveCocoa
 import Result
 
 class SignInViewModel {
-    
-    }
-    
     
     fileprivate let authManager: AuthManager
     

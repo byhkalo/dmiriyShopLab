@@ -25,6 +25,12 @@ class OrdersListViewController: UIViewController, UITableViewDataSource, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadOrders()
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
+    func loadOrders() {
         OrdersManager.sharedInstance.getOrders(index: 0, count: 20)
             .on(failed: { (error) in
                 print("(OrdersListViewController) Get Error from firebase = \(error)")
@@ -32,9 +38,6 @@ class OrdersListViewController: UIViewController, UITableViewDataSource, UITable
                 self.ordersArray = self.sortedOrdersArrayByCreateDate(orderModels)
                 self.tableView.reloadData()
             }.start()
-        
-        tableView.delegate = self
-        tableView.dataSource = self
     }
     
     //    MARK: - UITableViewDataSource

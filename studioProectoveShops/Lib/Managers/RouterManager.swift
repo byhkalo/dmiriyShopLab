@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import FirebaseAuth
 
 class RouterManager {
     let navigationController : UINavigationController
@@ -56,6 +57,17 @@ class RouterManager {
         self.presentController(self.createControllerFromStoryboardName("Main", identifier: String(describing: ViewController.classForCoder())))
     }
     
+    func showSupervisorMenuViewController() {
+        self.presentController(self.createControllerFromStoryboardName("Main", identifier: String(describing: SupervisorMenuViewController.classForCoder())))
+    }
+    
+    //MARK: - Actions
+    
+    func logOut() {
+        try! FIRAuth.auth()!.signOut()
+        self.showSignInController()
+    }
+    
     //MARK: - Show Alerts
     
     func displayAlertController(_ alertController: UIAlertController) {
@@ -68,5 +80,34 @@ class RouterManager {
         alertController.addAction(action)
         displayAlertController(alertController)
     }
+    
+}
 
+extension UIViewController
+{
+    class func instantiateFromStoryboard() -> Self
+    {
+        return instantiateFromStoryboardHelper(type: self, storyboardName: "Main")
+    }
+    
+    class func instantiateFromStoryboard(storyboardName: String) -> Self
+    {
+        return instantiateFromStoryboardHelper(type: self, storyboardName: storyboardName)
+    }
+    
+    private class func instantiateFromStoryboardHelper<T>(type: T.Type, storyboardName: String) -> T
+    {
+        let storyboardId = String(describing: self.classForCoder())
+//        let storyboardId = ""
+//        let components = "\(String(describing: type))".componentsSeparatedByString(".")
+//        
+//        if components.count > 1
+//        {
+//            storyboardId = components[1]
+//        }
+        let storyboad = UIStoryboard(name: storyboardName, bundle: nil)
+        let controller = storyboad.instantiateViewController(withIdentifier: storyboardId) as! T
+        
+        return controller
+    }
 }

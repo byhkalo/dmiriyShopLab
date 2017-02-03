@@ -19,10 +19,8 @@ class CreateOrderViewController: UIViewController, UITableViewDataSource, UITabl
     
     var shopModel: ShopModel? {
         didSet {
-            if let newShopModel = shopModel {
-                shopNameLabel.text = newShopModel.name
-                shopLastVisitDateLabel.text = Converter.prettySringFromDate(newShopModel.lastVisitDate)
-                shopPlanFrequancyLabel.text = String(newShopModel.planFrequency)
+            if shopModel != nil {
+                configurateByShopModel()
             }
         }
     }
@@ -50,12 +48,28 @@ class CreateOrderViewController: UIViewController, UITableViewDataSource, UITabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        if shopModel != nil {
+            configurateByShopModel()
+        }
         productsTableView.delegate = self
         productsTableView.dataSource = self
         deliveryDatePicker.date = Date().addingTimeInterval(24 * 60 * 60) // set next date
     }
 
+    func configurateByShopModel() {
+        if let shopModel = shopModel {
+            if let shopNameLabel = shopNameLabel {
+                shopNameLabel.text = shopModel.name
+            }
+            if let shopLastVisitDateLabel = shopLastVisitDateLabel {
+                shopLastVisitDateLabel.text = Converter.prettySringFromDate(shopModel.lastVisitDate)
+            }
+            if let shopPlanFrequancyLabel = shopPlanFrequancyLabel {
+                shopPlanFrequancyLabel.text = "\(shopModel.planFrequency)"
+            }
+        }
+    }
+    
     func updateProductTableView() {
         ProductsManager.sharedInstance.getProducts(index: 0, count: 20).on(failed: { (error) in
             print("(CreateOrderViewController) Get Error from firebase = \(error)")

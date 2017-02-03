@@ -20,24 +20,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FIRApp.configure()
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        
-        
-        
-        let blogTabBarController = storyboard.instantiateViewController(withIdentifier: String(describing: ViewController.classForCoder()))
-        
 //        try! FIRAuth.auth()!.signOut()
         
-        let rootController = FIRAuth.auth()?.currentUser == nil ? SignInViewController() : blogTabBarController
-        let navController = UINavigationController.init(rootViewController: rootController)
+        rootController { (rootController) in
+            DispatchQueue.main.async {
+                let navController = UINavigationController.init(rootViewController: rootController)
+                
+                self.router = RouterManager(navigationController: navController)
+                self.configurateWindow(rootController: navController)
+            }
+        }
         
-        self.router = RouterManager(navigationController: navController)
-        
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.rootViewController = navController
-        self.window?.makeKeyAndVisible()
+        let helpController = UIViewController()
+        helpController.view.backgroundColor = UIColor.white
+        configurateWindow(rootController: helpController)
         
         return true
+    }
+    
+    func configurateWindow(rootController: UIViewController) {
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        self.window?.rootViewController = rootController
+        self.window?.makeKeyAndVisible()
+    }
+    
+    func rootController(comletionHandler: @escaping ((UIViewController) -> ())) {
+        if let _ = FIRAuth.auth()?.currentUser {
+            var controller = UIViewController()
+
+            UserModel.getCurrentUser(volunteer: { (userModel) in
+                controller = userModel.isAdminSupervisor ? SupervisorMenuViewController.instantiateFromStoryboard() : ViewController.instantiateFromStoryboard()
+                comletionHandler(controller)
+            })
+            
+        } else {
+            comletionHandler(SignInViewController())
+        }
     }
 }
 

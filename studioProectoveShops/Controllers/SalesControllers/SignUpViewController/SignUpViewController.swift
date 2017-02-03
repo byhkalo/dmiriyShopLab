@@ -109,7 +109,8 @@ extension SignUpViewController {
             uProp.Location          : location,
             uProp.OrdersList        : [],
             uProp.ShopsList         : [],
-            uProp.PlanList          : []
+            uProp.PlanList          : [],
+            uProp.IsAdminSupervisor : false
             ] as [String : Any]
         
         usersRef.child(user.uid).setValue(newUser)
