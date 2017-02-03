@@ -1,5 +1,8 @@
 PODS:
   - Alamofire (4.3.0)
+  - Charts (3.0.1):
+    - Charts/Core (= 3.0.1)
+  - Charts/Core (3.0.1)
   - Firebase (3.11.1):
     - Firebase/Core (= 3.11.1)
   - Firebase/Auth (3.11.1):
@@ -62,6 +65,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.3)
+  - Charts (~> 3.0)
   - Firebase
   - Firebase/Auth
   - Firebase/Core
@@ -72,6 +76,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
+  Charts: 0e84f4418e87dad6a9edde221fba37ebb51d3ba7
   Firebase: 53b2343db1ebfa3eb16bdb4318b8bb65360b2220
   FirebaseAnalytics: 9c67af0ebeb8d2146c9b4ea2616439affa947b58
   FirebaseAuth: b436e4ecebe068bf8e8c6e4e29de5756ffe7ee24
@@ -88,6 +93,6 @@ SPEC CHECKSUMS:
   ReactiveSwift: f391724ee318a2cfd3e37dfb041cd49ecf4e7869
   Result: 4e3ed5995ed94d0cd6a09be9a431fce3f3624bbf
 
-PODFILE CHECKSUM: 868b42b27f5e1bfd9bb58183c22d91993914eec2
+PODFILE CHECKSUM: 759e16c9996fb5bfa8db344dc48aa6e2a35f6449
 
 COCOAPODS: 1.1.1

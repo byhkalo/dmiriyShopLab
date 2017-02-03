@@ -5,6 +5,7 @@ xcodeproj 'studioProectoveShops.xcodeproj'
 use_frameworks!
 
 target ‘studioProectoveShops’ do
+  pod 'Charts', '~> 3.0'
   pod 'Alamofire', '~> 4.3'
   pod 'Firebase/Database'
   pod 'Firebase/Auth'
