@@ -40,7 +40,9 @@ class SalesDetailViewController: UIViewController {
     }
     
     @IBAction func graphsForPlanButtonPressed(_ sender: UIButton) {
-        navigationController?.pushViewController(PlanGraphViewController.instantiateFromStoryboard(), animated: true)
+        let controller = PlanGraphViewController.instantiateFromStoryboard()
+        controller.userDetail = userDetail
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     @IBAction func backButtonPressed(_ sender: UIBarButtonItem) {

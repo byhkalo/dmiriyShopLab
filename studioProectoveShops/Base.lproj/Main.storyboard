@@ -1640,19 +1640,30 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vKa-ud-Mq4" customClass="BarChartView" customModule="Charts">
+                                <rect key="frame" x="20" y="84" width="335" height="563"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="vKa-ud-Mq4" firstAttribute="top" secondItem="FDf-bK-hSI" secondAttribute="bottom" constant="20" id="0uk-rg-YoY"/>
                             <constraint firstAttribute="trailing" secondItem="FDf-bK-hSI" secondAttribute="trailing" id="Dg5-ez-hiz"/>
+                            <constraint firstItem="vKa-ud-Mq4" firstAttribute="leading" secondItem="ivt-y9-YZz" secondAttribute="leading" constant="20" id="Ohm-9m-mMt"/>
                             <constraint firstItem="FDf-bK-hSI" firstAttribute="top" secondItem="DZq-0R-Gqb" secondAttribute="bottom" id="S0c-2u-FpJ"/>
                             <constraint firstItem="FDf-bK-hSI" firstAttribute="leading" secondItem="ivt-y9-YZz" secondAttribute="leading" id="ahi-ax-4kZ"/>
+                            <constraint firstAttribute="trailing" secondItem="vKa-ud-Mq4" secondAttribute="trailing" constant="20" id="q1Z-1d-bTC"/>
+                            <constraint firstItem="3do-LQ-RpI" firstAttribute="top" secondItem="vKa-ud-Mq4" secondAttribute="bottom" constant="20" id="xiJ-Sr-xZe"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="pPE-xe-Fam"/>
+                    <connections>
+                        <outlet property="chartView" destination="vKa-ud-Mq4" id="OcJ-pN-X9j"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UFe-Pk-O1w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3692" y="-741"/>
+            <point key="canvasLocation" x="3692" y="-741.67916041979015"/>
         </scene>
         <!--Plan List Sales View Controller-->
         <scene sceneID="dPV-gp-Y8m">
