@@ -68,6 +68,7 @@
 		A541160E1E43D39D00CF0380 /* PlanTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A541160D1E43D39D00CF0380 /* PlanTableViewCell.swift */; };
 		A54116101E43D3B100CF0380 /* PlanTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A541160F1E43D3B100CF0380 /* PlanTableViewCell.xib */; };
 		A54116121E43E23400CF0380 /* DayPlanManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54116111E43E23400CF0380 /* DayPlanManager.swift */; };
+		A576F1251E4A7D42009E4719 /* ProductImagePresentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A576F1241E4A7D42009E4719 /* ProductImagePresentViewController.swift */; };
 		A593DD511E4407B900EDEE13 /* PlanListSalesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A593DD501E4407B900EDEE13 /* PlanListSalesViewController.swift */; };
 		A593DD531E44081E00EDEE13 /* PlanDetailSalesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A593DD521E44081E00EDEE13 /* PlanDetailSalesViewController.swift */; };
 		A593DD551E44082F00EDEE13 /* PlanShopDetailSalesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A593DD541E44082F00EDEE13 /* PlanShopDetailSalesViewController.swift */; };
@@ -141,6 +142,7 @@
 		A541160D1E43D39D00CF0380 /* PlanTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanTableViewCell.swift; sourceTree = "<group>"; };
 		A541160F1E43D3B100CF0380 /* PlanTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlanTableViewCell.xib; sourceTree = "<group>"; };
 		A54116111E43E23400CF0380 /* DayPlanManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayPlanManager.swift; sourceTree = "<group>"; };
+		A576F1241E4A7D42009E4719 /* ProductImagePresentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProductImagePresentViewController.swift; sourceTree = "<group>"; };
 		A593DD501E4407B900EDEE13 /* PlanListSalesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanListSalesViewController.swift; sourceTree = "<group>"; };
 		A593DD521E44081E00EDEE13 /* PlanDetailSalesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanDetailSalesViewController.swift; sourceTree = "<group>"; };
 		A593DD541E44082F00EDEE13 /* PlanShopDetailSalesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanShopDetailSalesViewController.swift; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 		A53377121E401F3C00715B60 /* SalesControllers */ = {
 			isa = PBXGroup;
 			children = (
+				A576F1231E4A7D30009E4719 /* ProductImagePresentViewController */,
 				A593DD4D1E4406EF00EDEE13 /* PlanListSalesViewController */,
 				A593DD4C1E4406EF00EDEE13 /* PlanDetailSalesViewController */,
 				A593DD4E1E4406EF00EDEE13 /* PlanShopDetailSalesViewController */,
@@ -582,6 +585,14 @@
 				A541160F1E43D3B100CF0380 /* PlanTableViewCell.xib */,
 			);
 			path = PlanTableViewCell;
+			sourceTree = "<group>";
+		};
+		A576F1231E4A7D30009E4719 /* ProductImagePresentViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A576F1241E4A7D42009E4719 /* ProductImagePresentViewController.swift */,
+			);
+			path = ProductImagePresentViewController;
 			sourceTree = "<group>";
 		};
 		A593DD4B1E4406EF00EDEE13 /* PlanCreateOrderSalesViewController */ = {
@@ -827,6 +838,7 @@
 				A512FA081E4024700046671D /* ProductTableViewCell.swift in Sources */,
 				A51719901E4A1ACC006DFF35 /* SaleShopListViewControiller.swift in Sources */,
 				A512FA0C1E4024700046671D /* ShopTableViewCell.swift in Sources */,
+				A576F1251E4A7D42009E4719 /* ProductImagePresentViewController.swift in Sources */,
 				A593DD591E44085100EDEE13 /* PlanShopsRoutingSalesViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
