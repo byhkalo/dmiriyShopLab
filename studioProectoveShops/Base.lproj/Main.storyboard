@@ -2227,5 +2227,54 @@
             </objects>
             <point key="canvasLocation" x="2972" y="-2069"/>
         </scene>
+        <!--Product Image Present View Controller-->
+        <scene sceneID="vdS-8L-xTi">
+            <objects>
+                <viewController storyboardIdentifier="ProductImagePresentViewController" id="rGe-Zf-49u" customClass="ProductImagePresentViewController" customModule="studioProectoveShops" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="LAy-dt-dg0"/>
+                        <viewControllerLayoutGuide type="bottom" id="dee-1S-zHc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="up4-Xy-X2Q">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S5Z-48-crM">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="Image Present" id="zzj-97-H6b">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="iQk-lk-ees">
+                                            <connections>
+                                                <action selector="backButtonPressed:" destination="rGe-Zf-49u" id="qim-T5-sXB"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p4w-SJ-CQf">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="603" id="7xt-6q-zsG"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="p4w-SJ-CQf" secondAttribute="trailing" id="09y-wh-49e"/>
+                            <constraint firstItem="S5Z-48-crM" firstAttribute="top" secondItem="LAy-dt-dg0" secondAttribute="bottom" id="a2X-n8-Cif"/>
+                            <constraint firstAttribute="trailing" secondItem="S5Z-48-crM" secondAttribute="trailing" id="aP3-tO-F4Q"/>
+                            <constraint firstItem="p4w-SJ-CQf" firstAttribute="leading" secondItem="up4-Xy-X2Q" secondAttribute="leading" id="uTX-iE-Qlo"/>
+                            <constraint firstItem="S5Z-48-crM" firstAttribute="leading" secondItem="up4-Xy-X2Q" secondAttribute="leading" id="wBh-7g-b2d"/>
+                            <constraint firstItem="p4w-SJ-CQf" firstAttribute="top" secondItem="S5Z-48-crM" secondAttribute="bottom" id="wDt-by-e1d"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="p4w-SJ-CQf" id="Mmh-cA-AXg"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WM5-7M-VGU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4408.8000000000002" y="-3.1484257871064472"/>
+        </scene>
     </scenes>
 </document>

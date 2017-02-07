@@ -7,29 +7,31 @@
 //
 
 import UIKit
+import Firebase
 
 class ProductImagePresentViewController: UIViewController {
 
+    @IBOutlet weak var imageView: UIImageView!
+    
+    var urlString: String!
+    
+    var storage = FIRStorage.storage()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        self.storage.reference(forURL: urlString).data(withMaxSize: 25 * 2048 * 2048, completion: { (data, error) -> Void in
+            let image = UIImage(data: data!)
+            DispatchQueue.main.async {
+                self.imageView.image = image!
+            }
+        })
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+//    MARK: - Actions
+    
+    @IBAction func backButtonPressed(_ sender: UIBarButtonItem) {
+        _ = navigationController?.popViewController(animated: true)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

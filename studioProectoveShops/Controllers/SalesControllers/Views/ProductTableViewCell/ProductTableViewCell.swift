@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 typealias ProductStateChanged = (_ isSelected: Bool, _ selectedCount: Int) -> ()
 
@@ -23,7 +24,7 @@ class ProductTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     var stateChangedBlock: ProductStateChanged?
     
-//    var storage = FIRStorage.storage()
+    var storage = FIRStorage.storage()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -49,13 +50,12 @@ class ProductTableViewCell: UITableViewCell, UITextFieldDelegate {
         inStorageDateLabel.text = String(model.inStorage)
         countGetTextField.delegate = self
         
-//        self.storage.referenceForURL(chatMessage.message).dataWithMaxSize(25 * 1024 * 1024, completion: { (data, error) -> Void in
-//            let image = UIImage(data: data!)
-//            chatMessage.image = image!
-//            self.messages.append(chatMessage)
-//            self.tableView.reloadData()
-//            self.scrollToBottom()
-//        })
+        self.storage.reference(forURL: productModel.imageString).data(withMaxSize: 25 * 1024 * 1024, completion: { (data, error) -> Void in
+            let image = UIImage(data: data!)
+            DispatchQueue.main.async {
+                self.productImage.image = image!
+            }
+        })
     }
 
 //    MARK: - UITextFieldDelegate
@@ -101,6 +101,11 @@ class ProductTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     @IBAction func imagePresentButtonAction(_ sender: UIButton) {
+        
+        let controller = ProductImagePresentViewController.instantiateFromStoryboard()
+        controller.urlString = productModel.imageString
+        router().presentController(controller)
+        
         print("imagePresentButtonAction")
     }
     

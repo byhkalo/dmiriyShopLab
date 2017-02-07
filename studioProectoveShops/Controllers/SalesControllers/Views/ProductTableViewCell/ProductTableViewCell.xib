@@ -16,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="101"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lnv-EK-UmD" id="9X3-ND-FQi">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="100.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="93m-rx-sGF">
@@ -150,7 +150,6 @@
                             <constraint firstAttribute="width" constant="73" id="e3x-FX-Ohu"/>
                             <constraint firstAttribute="height" constant="73" id="ioB-iF-4ZE"/>
                         </constraints>
-                        <state key="normal" title="Button"/>
                         <connections>
                             <action selector="imagePresentButtonAction:" destination="lnv-EK-UmD" eventType="touchUpInside" id="Pwh-8o-HxX"/>
                         </connections>
