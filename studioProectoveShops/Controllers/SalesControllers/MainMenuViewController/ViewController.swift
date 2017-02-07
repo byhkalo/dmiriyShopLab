@@ -15,6 +15,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let locationManager = LocationManager.sharedInstance.locationManager
+        
+        UserModel.getCurrentUser { (user) in
+            LocationManager.sharedInstance.userTracking = user
+        }
+        
         print("location manager = \(locationManager)")
     }
 
@@ -56,4 +61,3 @@ class ViewController: UIViewController {
     }
     
 }
-

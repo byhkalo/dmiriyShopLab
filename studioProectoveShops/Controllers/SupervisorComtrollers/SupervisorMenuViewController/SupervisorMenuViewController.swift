@@ -27,10 +27,16 @@ class SupervisorMenuViewController: UIViewController, UITableViewDataSource, UIT
         
         UserModel.getCurrentUser { (userModel) in
             self.adminUser = userModel
-            self.salesList = userModel.salesList ?? [UserModel]()
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+            try! UsersManager.sharedInstance
+                .getSalesConnectedToAdmin(userModel: userModel)
+                .on(failed: { (error) in
+                    print("Error. SupervisorMenuViewController.swift LINE 33 Error = \(error)")
+                }, value: { (userModels) in
+                    self.salesList = userModels
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }).start()
         }
     }
     
