@@ -10,13 +10,15 @@ import UIKit
 
 class SalesDetailViewController: UIViewController {
 
+    @IBOutlet var salesNameIdLabel: UILabel!
+    
     var adminSuperviser: UserModel!
     var userDetail: UserModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        
+        salesNameIdLabel.text = userDetail.name + " " + userDetail.identifier
     }
     
 //    MARK: - Actions
@@ -41,6 +43,12 @@ class SalesDetailViewController: UIViewController {
     
     @IBAction func graphsForPlanButtonPressed(_ sender: UIButton) {
         let controller = PlanGraphViewController.instantiateFromStoryboard()
+        controller.userDetail = userDetail
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    @IBAction func salesShopButtonPressed(_ sender: UIButton) {
+        let controller = SaleShopListViewControiller.instantiateFromStoryboard()
         controller.userDetail = userDetail
         navigationController?.pushViewController(controller, animated: true)
     }

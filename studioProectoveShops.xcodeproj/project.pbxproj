@@ -53,6 +53,8 @@
 		A512FA321E4153E60046671D /* ModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A512FA311E4153E60046671D /* ModelProtocol.swift */; };
 		A512FA341E41EB210046671D /* AddSalesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A512FA331E41EB210046671D /* AddSalesViewController.swift */; };
 		A512FA361E41EDD50046671D /* UsersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A512FA351E41EDD50046671D /* UsersManager.swift */; };
+		A51719901E4A1ACC006DFF35 /* SaleShopListViewControiller.swift in Sources */ = {isa = PBXBuildFile; fileRef = A517198F1E4A1ACC006DFF35 /* SaleShopListViewControiller.swift */; };
+		A51719921E4A1ADE006DFF35 /* AddShopToListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51719911E4A1ADE006DFF35 /* AddShopToListViewController.swift */; };
 		A533774C1E401F3C00715B60 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A53377281E401F3C00715B60 /* SignInViewController.xib */; };
 		A53377501E401F3C00715B60 /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A533772D1E401F3C00715B60 /* SignUpViewController.xib */; };
 		A54115FD1E435B7100CF0380 /* SalesDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54115FC1E435B7100CF0380 /* SalesDetailViewController.swift */; };
@@ -108,6 +110,8 @@
 		A512FA311E4153E60046671D /* ModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModelProtocol.swift; path = studioProectoveShops/Models/ModelProtocol.swift; sourceTree = SOURCE_ROOT; };
 		A512FA331E41EB210046671D /* AddSalesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddSalesViewController.swift; sourceTree = "<group>"; };
 		A512FA351E41EDD50046671D /* UsersManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersManager.swift; sourceTree = "<group>"; };
+		A517198F1E4A1ACC006DFF35 /* SaleShopListViewControiller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaleShopListViewControiller.swift; sourceTree = "<group>"; };
+		A51719911E4A1ADE006DFF35 /* AddShopToListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddShopToListViewController.swift; sourceTree = "<group>"; };
 		A53377101E400F2200715B60 /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		A53377141E401F3C00715B60 /* CreateOrderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateOrderViewController.swift; sourceTree = "<group>"; };
 		A53377161E401F3C00715B60 /* CreateShopViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateShopViewController.swift; sourceTree = "<group>"; };
@@ -332,6 +336,22 @@
 			path = ShopTableViewCell;
 			sourceTree = "<group>";
 		};
+		A517198D1E4A1A74006DFF35 /* AddShopToListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				A51719911E4A1ADE006DFF35 /* AddShopToListViewController.swift */,
+			);
+			path = AddShopToListViewController;
+			sourceTree = "<group>";
+		};
+		A517198E1E4A1A74006DFF35 /* SaleShopListViewControiller */ = {
+			isa = PBXGroup;
+			children = (
+				A517198F1E4A1ACC006DFF35 /* SaleShopListViewControiller.swift */,
+			);
+			path = SaleShopListViewControiller;
+			sourceTree = "<group>";
+		};
 		A53377121E401F3C00715B60 /* SalesControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -469,6 +489,8 @@
 				A533775F1E40208A00715B60 /* PlanDetailViewController */,
 				A533775E1E40208A00715B60 /* CreatePlanViewController */,
 				A533775D1E40208A00715B60 /* AddShopToPlanViewController */,
+				A517198E1E4A1A74006DFF35 /* SaleShopListViewControiller */,
+				A517198D1E4A1A74006DFF35 /* AddShopToListViewController */,
 			);
 			path = SupervisorComtrollers;
 			sourceTree = "<group>";
@@ -766,6 +788,7 @@
 				A512FA131E4024A10046671D /* SelectProductViewController.swift in Sources */,
 				A54116071E43C59500CF0380 /* PlanDetailViewController.swift in Sources */,
 				A512FA141E4024A10046671D /* SelectShopViewController.swift in Sources */,
+				A51719921E4A1ADE006DFF35 /* AddShopToListViewController.swift in Sources */,
 				A512FA151E4024A10046671D /* ShopLocationViewController.swift in Sources */,
 				A512FA161E4024A10046671D /* ShopsListViewController.swift in Sources */,
 				A54116031E43C57500CF0380 /* SalesLocationViewController.swift in Sources */,
@@ -802,6 +825,7 @@
 				A541160B1E43C5B000CF0380 /* AddShopToPlanViewController.swift in Sources */,
 				A512FA061E4024700046671D /* OrderTableViewCell.swift in Sources */,
 				A512FA081E4024700046671D /* ProductTableViewCell.swift in Sources */,
+				A51719901E4A1ACC006DFF35 /* SaleShopListViewControiller.swift in Sources */,
 				A512FA0C1E4024700046671D /* ShopTableViewCell.swift in Sources */,
 				A593DD591E44085100EDEE13 /* PlanShopsRoutingSalesViewController.swift in Sources */,
 			);

@@ -25,7 +25,10 @@ class PlanDetailViewController: UIViewController, UITableViewDataSource, UITable
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        loadShops()
+    }
+
+    func loadShops() {
         DayPlanManager.sharedInstance
             .getShopsConnectedToPlan(dayPlan: dayPlanDetail)
             .on(failed: { (error) in
@@ -37,7 +40,7 @@ class PlanDetailViewController: UIViewController, UITableViewDataSource, UITable
                 }
             }.start()
     }
-
+    
     //    MARK: - UITableViewDataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -30,7 +30,7 @@ class PlanCreateOrderSalesViewController: CreateOrderViewController {
                                           createDate: Date(),
                                           totalPrice: totalPrice,
                                           productArray: productsOrderDictionary,
-                                          dayPlan: dayPlanDetail) { (isSuccess) in
+                                          dayPlan: dayPlanDetail) { (order) in
                                             
                                             ShopsManager.sharedInstance.insertOrderToShopId(shopModel.identifier, newOrderValue: productsOrderDictionary).on(failed: { (error) in
                                                 print("Fucking Eror from FireBase. Error: \(error)")

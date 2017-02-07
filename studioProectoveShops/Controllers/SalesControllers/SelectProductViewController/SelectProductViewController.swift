@@ -138,15 +138,15 @@ class SelectProductViewController: UIViewController, UITableViewDataSource, UITa
     //    MARK: - Sort func
     
     func fetchPreviousBigOrder() {
-        guard let helpShopModel = shopModel, helpShopModel.orderArray != nil else {
+        guard let helpShopModel = shopModel, helpShopModel.orderArrayConv != nil else {
             return
         }
         
         var largeSumOfOrders = [String: NSNumber]()
         
-        for (_, orderDict) in helpShopModel.orderArray! {
-//            for (keyOrder, orderDict) in dictionary {
-        
+        for (_, order) in helpShopModel.orderArrayConv!.enumerated() {
+            
+            if let orderDict = order.productArray {
                 for (keyProductID, productCount) in orderDict {
                     if let comparingValue = largeSumOfOrders[keyProductID] {
                         largeSumOfOrders[keyProductID] = comparingValue.intValue < productCount.intValue ? productCount : comparingValue
@@ -154,7 +154,7 @@ class SelectProductViewController: UIViewController, UITableViewDataSource, UITa
                         largeSumOfOrders[keyProductID] = productCount
                     }
                 }
-//            }
+            }
         }
         
         if largeSumOfOrders.count > 0 {

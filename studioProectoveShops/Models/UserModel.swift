@@ -57,7 +57,7 @@ class UserModel: NSObject, ModelProtocol {
         self.supervisorOwnerID = user[uProp.SupervisorID] as! String
         self.ordersList = OrderModel.initArray(snapshotArray: user[uProp.OrdersList] as? Array<Dictionary<String, Any>>)
         self.shopsList = ShopModel.initArray(snapshotArray: user[uProp.ShopsList] as? Array<Dictionary<String, Any>>)
-        self.planList = DayPlanModel.initArray(snapshotArray: user[uProp.ShopsList] as? Array<Dictionary<String, Any>>)
+        self.planList = DayPlanModel.initArray(snapshotArray: user[uProp.PlanList] as? Array<Dictionary<String, Any>>)
         self.salesList = UserModel.initArray(snapshotArray: user[uProp.SalesList] as? Array<Dictionary<String, Any>>)
         
         self.location = user[uProp.Location] as! [String : NSNumber]
@@ -102,8 +102,7 @@ class UserModel: NSObject, ModelProtocol {
             var helpOrdersList = self.ordersList ?? [OrderModel]()
             helpOrdersList.append(contentsOf: addOrdersList)
             
-            self.ordersList = helpOrdersList
-            self.updateUserInformation()
+            replaceOrdersBy(helpOrdersList)
         }
     }
     
@@ -112,8 +111,7 @@ class UserModel: NSObject, ModelProtocol {
             var helpShopsList = self.shopsList ?? [ShopModel]()
             helpShopsList.append(contentsOf: addShopsList)
             
-            self.shopsList = helpShopsList
-            self.updateUserInformation()
+            replaceShopsBy(helpShopsList)
         }
     }
     
@@ -122,8 +120,7 @@ class UserModel: NSObject, ModelProtocol {
             var helpPlansList = self.planList ?? [DayPlanModel]()
             helpPlansList.append(contentsOf: addPlansList)
             
-            self.planList = helpPlansList
-            self.updateUserInformation()
+            replacePlansBy(helpPlansList)
         }
     }
     
@@ -132,10 +129,33 @@ class UserModel: NSObject, ModelProtocol {
             var helpSalesList = self.salesList ?? [UserModel]()
             helpSalesList.append(contentsOf: addSalesList)
             
-            self.salesList = helpSalesList
-            self.updateUserInformation()
+            replaceSalesBy(helpSalesList)
         }
     }
+    
+//    MARK: - Replace Methods
+    
+    func replaceOrdersBy(_ ordersList: [OrderModel]) {
+        self.ordersList = ordersList
+        self.updateUserInformation()
+    }
+    
+    func replaceShopsBy(_ shopList: [ShopModel]) {
+        self.shopsList = shopList
+        self.updateUserInformation()
+    }
+    
+    func replacePlansBy(_ shopList: [DayPlanModel]) {
+        self.planList = shopList
+        self.updateUserInformation()
+    }
+    
+    func replaceSalesBy(_ salesList: [UserModel]) {
+        self.salesList = salesList
+        self.updateUserInformation()
+    }
+    
+    
 //    class func getCurrentUser() -> UserModel {
 //        var user: UserModel!
 //        

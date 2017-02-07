@@ -24,13 +24,39 @@ class CreatePlanViewController: UIViewController {
     
     @IBAction func savePlan(_ sender: UIBarButtonItem) {
         
-        DayPlanManager.sharedInstance.createNewPlan(userModel: userDetail, date: planDatePicker.date) { (isSuccess) in
-            if !isSuccess {
-                print("Error. CreatePlanViewController.swift. LINE 29. Error = Can't create plan")
-            } else {
-                self.backButtonPressed(nil)
-            }
-        }
+        var shopsModels = [ShopModel]()
+        
+        ShopsManager.sharedInstance
+            .getShopsConnectedUser(user: userDetail)
+            .on(failed: { (error) in
+                print("Error. CreatePlanViewController.swift. LINE 32. Error = \(error)")
+            }) { (shopModels) in
+                var planShop = [ShopModel]()
+                let pickerDate = self.planDatePicker.date
+                
+                for helpShop in shopsModels {
+                    let dayDelta = Converter.dayDelta(dateOne: pickerDate, dateTwo: helpShop.lastVisitDate)
+                    
+                    let fDayDelta = Float(dayDelta)
+                    let fPlanFrequancy = Float(helpShop.planFrequency == 0 ? 1 : helpShop.planFrequency)
+                    
+                    let value = fDayDelta.truncatingRemainder(dividingBy: fPlanFrequancy)
+                    if value == 0.0 {
+                        planShop.append(helpShop)
+                    }
+                }
+                shopsModels = planShop
+                
+                DayPlanManager.sharedInstance.createNewPlan(userModel: self.userDetail, date: pickerDate, shopsModels: shopsModels) { (isSuccess) in
+                    if !isSuccess {
+                        print("Error. CreatePlanViewController.swift. LINE 29. Error = Can't create plan")
+                    } else {
+                        self.backButtonPressed(nil)
+                    }
+                }
+                
+        }.start()
+        
     }
     
     @IBAction func backButtonPressed(_ sender: UIBarButtonItem?) {

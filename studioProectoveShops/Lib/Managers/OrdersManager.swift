@@ -52,21 +52,19 @@ class OrdersManager {
         }
     }
     
-    func createNewOrderShopIdentifier(_ shopModel: ShopModel, deliveryDate: Date, createDate: Date, totalPrice: Float, productArray: Dictionary<String, NSNumber>, dayPlan: DayPlanModel? = nil, completionHandler: @escaping (_ isSuccess: Bool) ->()) {
+    func createNewOrderShopIdentifier(_ shopModel: ShopModel, deliveryDate: Date, createDate: Date, totalPrice: Float, productArray: Dictionary<String, NSNumber>, dayPlan: DayPlanModel? = nil, completionHandler: @escaping (_ orderModel: OrderModel?) ->()) {
         
         let order = OrderModel(identifier: "", shopModel: shopModel, deliveryDate: deliveryDate, createDate: createDate, totalPrice: totalPrice, productArray: productArray)
         let dictPresentation = order.dictionaryPresentationWithoutId()
         
         self.ref.child(Constants.Orders).childByAutoId().setValue(dictPresentation) { (error, reference) in
-            if let dayPlan = dayPlan {
-                let identifier = reference.key
-                self.getOrderByID(identifier)
-                    .on(failed: { print("Error. OrdersManager.swift. LINE 63. Error = \($0)") },
-                        value: { (orderModels) in
-                            dayPlan.addOrders(orderModels)
-                    }).start()
-            }
-            completionHandler(error == nil)
-        } 
+            let identifier = reference.key
+            self.getOrderByID(identifier)
+                .on(failed: { print("Error. OrdersManager.swift. LINE 63. Error = \($0)") },
+                    value: { (orderModels) in
+                        if let dayPlan = dayPlan { dayPlan.addOrders(orderModels) }
+                        completionHandler(orderModels.first)
+                }).start()
+        }
     }
 }

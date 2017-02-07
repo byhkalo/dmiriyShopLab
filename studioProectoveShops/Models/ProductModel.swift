@@ -16,6 +16,7 @@ class ProductModel: NSObject, ModelProtocol {
     let price: Float
     let descriptionProduct: String
     let inStorage: Int
+    let imageString: String
     
     convenience init(model: Dictionary<String, AnyObject>) {
         let productProp = Constants.Product.self
@@ -23,7 +24,8 @@ class ProductModel: NSObject, ModelProtocol {
                   name                  : model[productProp.Name]! as! String,
                   descriptionProduct    : model[productProp.Description]! as! String,
                   price                 : (model[productProp.Price]! as! NSNumber).floatValue,
-                  inStorage             : (model[productProp.InStorage]! as! NSNumber).intValue)
+                  inStorage             : (model[productProp.InStorage]! as! NSNumber).intValue,
+                  imageString           : model[productProp.Image]! as! String)
     }
     
     convenience init(snapshot: FIRDataSnapshot) {
@@ -32,13 +34,14 @@ class ProductModel: NSObject, ModelProtocol {
         self.init(model: value)
     }
     
-    init(identifier: String, name: String, descriptionProduct: String, price: Float, inStorage: Int) {
+    init(identifier: String, name: String, descriptionProduct: String, price: Float, inStorage: Int, imageString: String) {
         
         self.identifier = identifier
         self.name = name
         self.price = price
         self.descriptionProduct = descriptionProduct
         self.inStorage = inStorage
+        self.imageString = imageString
     }
     
     func dictionaryPresentation() -> Dictionary<String, Any> {
@@ -49,7 +52,8 @@ class ProductModel: NSObject, ModelProtocol {
              productProp.Name         : name as AnyObject,
              productProp.Price        : NSNumber(value: price),
              productProp.Description  : descriptionProduct as AnyObject,
-             productProp.InStorage    : NSNumber(value: inStorage)]
+             productProp.InStorage    : NSNumber(value: inStorage),
+             productProp.Image        : imageString as AnyObject]
         return productDictionary
     }
 

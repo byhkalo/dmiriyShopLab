@@ -17,7 +17,8 @@ class ShopModel: NSObject, ModelProtocol {
     let lat: Float
     let lon: Float
     let planFrequency: Int
-    let orderArray: Dictionary<String, Dictionary<String, NSNumber>>?
+    var orderArrayConv: [OrderModel]? //Dictionary<String, Dictionary<String, NSNumber>>?
+//    let orderArray: Dictionary<String, Dictionary<String, NSNumber>>?
     
     convenience init(model: Dictionary<String, Any>) {
         let coordinate = model[Constants.Shop.Coordinate] as! NSDictionary
@@ -27,7 +28,7 @@ class ShopModel: NSObject, ModelProtocol {
                   lat: (coordinate["lat"]! as! NSNumber).floatValue,
                   lon: (coordinate["lon"]! as! NSNumber).floatValue,
                   planFrequency: (model[Constants.Shop.PlanFrequency]! as! NSNumber).intValue,
-                  orderArray: model[Constants.Shop.Orders] as? Dictionary<String, Dictionary<String, NSNumber>>)
+                  orderArray: model[Constants.Shop.Orders] as? Array<Dictionary<String, Any>>)
     }
     convenience init(snapshot: FIRDataSnapshot) {
         var value = snapshot.value! as! Dictionary<String, AnyObject>
@@ -35,14 +36,14 @@ class ShopModel: NSObject, ModelProtocol {
         self.init(model: value)
     }
     
-    init(name:String, identifier: String, lastVisitDate: Date, lat: Float, lon: Float, planFrequency: Int, orderArray: Dictionary<String, Dictionary<String, NSNumber>>?) {
+    init(name:String, identifier: String, lastVisitDate: Date, lat: Float, lon: Float, planFrequency: Int, orderArray: Array<Dictionary<String, Any>>?) {
         self.name = name
         self.identifier = identifier
         self.lastVisitDate = lastVisitDate
         self.lat = lat
         self.lon = lon
         self.planFrequency = planFrequency
-        self.orderArray = orderArray
+        self.orderArrayConv = OrderModel.initArray(snapshotArray: orderArray)
     }
     
     func dictionaryPresentation() -> Dictionary<String, Any> {

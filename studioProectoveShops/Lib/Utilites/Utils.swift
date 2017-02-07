@@ -130,4 +130,21 @@ struct Converter {
         }
         return (0, 0)
     }
+    
+//    MARK: Date Operations
+    
+    static func dayDelta(dateOne: Date, dateTwo: Date) -> Int {
+        
+        let dateOneConv = dateFromDayString(daySringFromDate(dateOne))
+        let dateTwoConv = dateFromDayString(daySringFromDate(dateTwo))
+        
+        
+        var deltaTimeStamp: Double = Double(dateOneConv!.timeIntervalSinceReferenceDate - dateTwoConv!.timeIntervalSinceReferenceDate)
+        deltaTimeStamp = deltaTimeStamp < 0 ? deltaTimeStamp * -1 : deltaTimeStamp
+        
+        let dayDelta = Int(deltaTimeStamp / 60 / 60 / 24)
+        
+        return dayDelta
+    }
+    
 }

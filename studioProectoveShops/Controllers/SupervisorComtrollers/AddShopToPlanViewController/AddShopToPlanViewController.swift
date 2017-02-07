@@ -27,7 +27,10 @@ class AddShopToPlanViewController: UIViewController, UITableViewDataSource, UITa
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        loadShops()
+    }
+    
+    func loadShops() {
         DayPlanManager.sharedInstance
             .getShopsNotConnectedToPlan(dayPlan: dayPlanDetail)
             .on(failed: { (error) in

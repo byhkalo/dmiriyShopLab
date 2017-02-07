@@ -39,6 +39,7 @@ struct Constants {
         static let Price = "price"
         static let Description = "description"
         static let InStorage = "inStorage"
+        static let Image = "image"
     }
     
     struct Cell {

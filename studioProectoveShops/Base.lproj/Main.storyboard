@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -1334,11 +1334,33 @@
                                     <action selector="graphsForPlanButtonPressed:" destination="IPa-l2-VdW" eventType="touchUpInside" id="Fzu-zo-Ihi"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QCj-Tt-Ob9">
+                                <rect key="frame" x="114" y="404" width="146" height="39"/>
+                                <color key="backgroundColor" red="0.31408888610000002" green="0.64999581959999997" blue="0.7912554825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="146" id="AgC-jU-8OQ"/>
+                                    <constraint firstAttribute="height" constant="39" id="YLY-Z0-z9X"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Sale Shops">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="clipToBounds" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="salesShopButtonPressed:" destination="IPa-l2-VdW" eventType="touchUpInside" id="pHw-R0-Osb"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="PqQ-UG-N0v" firstAttribute="centerX" secondItem="hNV-ym-Cbd" secondAttribute="centerX" id="9Zq-J2-XAE"/>
                             <constraint firstItem="a6K-bp-nq6" firstAttribute="top" secondItem="ke4-Vk-ufI" secondAttribute="bottom" constant="65" id="CYZ-Va-eSv"/>
+                            <constraint firstItem="QCj-Tt-Ob9" firstAttribute="top" secondItem="eA5-LL-GCo" secondAttribute="bottom" constant="15" id="FQ9-tx-kM8"/>
                             <constraint firstItem="zlL-El-TuE" firstAttribute="centerX" secondItem="hNV-ym-Cbd" secondAttribute="centerX" id="NaY-OY-UWV"/>
                             <constraint firstItem="a6K-bp-nq6" firstAttribute="centerX" secondItem="hNV-ym-Cbd" secondAttribute="centerX" id="Oj4-vh-Jym"/>
                             <constraint firstItem="eA5-LL-GCo" firstAttribute="centerX" secondItem="hNV-ym-Cbd" secondAttribute="centerX" id="P7P-cJ-8Rs"/>
@@ -1349,10 +1371,14 @@
                             <constraint firstItem="Xy1-39-G26" firstAttribute="top" secondItem="ke4-Vk-ufI" secondAttribute="bottom" id="kSl-fz-gMR"/>
                             <constraint firstItem="biE-aJ-T3g" firstAttribute="centerX" secondItem="hNV-ym-Cbd" secondAttribute="centerX" id="suG-tr-ywF"/>
                             <constraint firstItem="zlL-El-TuE" firstAttribute="top" secondItem="biE-aJ-T3g" secondAttribute="bottom" constant="15" id="uwn-Ba-JZr"/>
+                            <constraint firstItem="QCj-Tt-Ob9" firstAttribute="centerX" secondItem="hNV-ym-Cbd" secondAttribute="centerX" id="ydS-BA-GjE"/>
                             <constraint firstItem="PqQ-UG-N0v" firstAttribute="top" secondItem="a6K-bp-nq6" secondAttribute="bottom" constant="62" id="yqc-aV-A3h"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="HEm-NY-gYk"/>
+                    <connections>
+                        <outlet property="salesNameIdLabel" destination="a6K-bp-nq6" id="nrX-En-Nmo"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dbx-zF-10U" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2094,6 +2120,112 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A58-Rv-42Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3692" y="1499.1004497751126"/>
+        </scene>
+        <!--Sale Shop List View Controiller-->
+        <scene sceneID="V9O-lI-rWw">
+            <objects>
+                <viewController storyboardIdentifier="SaleShopListViewControiller" id="3AT-On-fm0" customClass="SaleShopListViewControiller" customModule="studioProectoveShops" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="UHP-TW-R5x"/>
+                        <viewControllerLayoutGuide type="bottom" id="Kpj-W1-aOw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jJ7-sQ-FUw">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zR7-nK-nIG">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="User's Shops LIst" id="Luf-YK-fDL">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="s0S-ij-XHK">
+                                            <connections>
+                                                <action selector="backButtonPressed:" destination="3AT-On-fm0" id="KPZ-CL-gV8"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="nhT-Mr-ka3">
+                                            <connections>
+                                                <action selector="addExtraShopToPlan:" destination="3AT-On-fm0" id="daG-hA-fso"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="I7P-bu-3uY">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="I7P-bu-3uY" secondAttribute="trailing" id="1ln-WS-q6s"/>
+                            <constraint firstItem="zR7-nK-nIG" firstAttribute="top" secondItem="UHP-TW-R5x" secondAttribute="bottom" id="73G-cZ-7kH"/>
+                            <constraint firstItem="I7P-bu-3uY" firstAttribute="top" secondItem="zR7-nK-nIG" secondAttribute="bottom" id="Maj-O2-HwL"/>
+                            <constraint firstItem="zR7-nK-nIG" firstAttribute="leading" secondItem="jJ7-sQ-FUw" secondAttribute="leading" id="Npx-bs-UoR"/>
+                            <constraint firstAttribute="trailing" secondItem="zR7-nK-nIG" secondAttribute="trailing" id="Qf3-RW-4Be"/>
+                            <constraint firstItem="Kpj-W1-aOw" firstAttribute="top" secondItem="I7P-bu-3uY" secondAttribute="bottom" id="kQM-uV-XSw"/>
+                            <constraint firstItem="I7P-bu-3uY" firstAttribute="leading" secondItem="jJ7-sQ-FUw" secondAttribute="leading" id="viU-2w-xgG"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="I7P-bu-3uY" id="jGm-2s-CbH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nQ6-1x-KPQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2972" y="-1407"/>
+        </scene>
+        <!--Add Shop To List View Controller-->
+        <scene sceneID="UzD-fh-RNl">
+            <objects>
+                <viewController storyboardIdentifier="AddShopToListViewController" id="YUE-Li-JOQ" customClass="AddShopToListViewController" customModule="studioProectoveShops" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tGl-ko-6tJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="vQx-4K-iLG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="phd-Za-h0W">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IV8-XT-wWU">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="Add Shop To Shop List" id="tFd-xV-SGU">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="reply" id="KPI-gd-Dlz">
+                                            <connections>
+                                                <action selector="backButtonPressed:" destination="YUE-Li-JOQ" id="vOw-th-aHI"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Hcd-sV-vbn">
+                                            <connections>
+                                                <action selector="addShopToPlan:" destination="YUE-Li-JOQ" id="Vkd-RF-Ld5"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="59k-aK-2l2">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="59k-aK-2l2" firstAttribute="leading" secondItem="phd-Za-h0W" secondAttribute="leading" id="6Oh-RK-qx0"/>
+                            <constraint firstItem="IV8-XT-wWU" firstAttribute="top" secondItem="tGl-ko-6tJ" secondAttribute="bottom" id="8Dd-ip-dbY"/>
+                            <constraint firstItem="vQx-4K-iLG" firstAttribute="top" secondItem="59k-aK-2l2" secondAttribute="bottom" id="EZ2-cb-idU"/>
+                            <constraint firstItem="IV8-XT-wWU" firstAttribute="leading" secondItem="phd-Za-h0W" secondAttribute="leading" id="KbC-po-g7i"/>
+                            <constraint firstAttribute="trailing" secondItem="59k-aK-2l2" secondAttribute="trailing" id="X5Z-tC-67p"/>
+                            <constraint firstItem="59k-aK-2l2" firstAttribute="top" secondItem="IV8-XT-wWU" secondAttribute="bottom" id="fj4-LU-diH"/>
+                            <constraint firstAttribute="trailing" secondItem="IV8-XT-wWU" secondAttribute="trailing" id="gdZ-et-Gw4"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="59k-aK-2l2" id="t3u-Db-laS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AZI-YH-kZf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2972" y="-2069"/>
         </scene>
     </scenes>
 </document>

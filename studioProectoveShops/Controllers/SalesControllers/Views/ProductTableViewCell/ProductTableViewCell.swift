@@ -17,10 +17,13 @@ class ProductTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var inStorageDateLabel: UILabel!
     @IBOutlet weak var checkBoxButton: UIButton!
     @IBOutlet weak var countGetTextField: UITextField!
+    @IBOutlet weak var productImage: UIImageView!
     
     var productModel: ProductModel!
     
     var stateChangedBlock: ProductStateChanged?
+    
+//    var storage = FIRStorage.storage()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -45,6 +48,14 @@ class ProductTableViewCell: UITableViewCell, UITextFieldDelegate {
         productNameLabel.text = model.name
         inStorageDateLabel.text = String(model.inStorage)
         countGetTextField.delegate = self
+        
+//        self.storage.referenceForURL(chatMessage.message).dataWithMaxSize(25 * 1024 * 1024, completion: { (data, error) -> Void in
+//            let image = UIImage(data: data!)
+//            chatMessage.image = image!
+//            self.messages.append(chatMessage)
+//            self.tableView.reloadData()
+//            self.scrollToBottom()
+//        })
     }
 
 //    MARK: - UITextFieldDelegate
@@ -87,6 +98,10 @@ class ProductTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBAction func checkBoxButtonAction(_ sender: UIButton) {
         setSelectedCell(!sender.isSelected)
         print("checkBoxButtonAction")
+    }
+    
+    @IBAction func imagePresentButtonAction(_ sender: UIButton) {
+        print("imagePresentButtonAction")
     }
     
 }

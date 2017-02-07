@@ -21,19 +21,14 @@ class DayPlanManager {
         self.ref = FIRDatabase.database().reference()
     }
     
-//    MARK: - Create Day Plan
-    
-//    let identifier: String
-//    let userID: String
-//    let date: Date
-//    var shopsList: [ShopModel]?
-//    var orderList: [OrderModel]?
-//    let totalSum: Float
-    
-    func createNewPlan(userModel: UserModel, date: Date, completionHandler: @escaping (_ isSuccess: Bool) ->()) {
+    func createNewPlan(userModel: UserModel, date: Date, shopsModels: [ShopModel], completionHandler: @escaping (_ isSuccess: Bool) ->()) {
+        
+        let shopsDictModels = ShopModel.listDictionaryPresentation(models: shopsModels)
+        
         let dpProp = Constants.DayShopsPlan.self
         let newPlan : [String : Any] = [dpProp.Date : Converter.sringFromDate(date),
                                         dpProp.UserId : userModel.identifier,
+                                        dpProp.ShopsList : shopsDictModels,
                                         dpProp.TotalSum : NSNumber(value: 0.0)]
         // firstly create new Plan
         self.ref.child(Constants.DayPlans).childByAutoId().setValue(newPlan) { (error, reference) in

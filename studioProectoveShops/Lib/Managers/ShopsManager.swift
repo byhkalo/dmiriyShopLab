@@ -55,6 +55,52 @@ class ShopsManager {
         }
     }
     
+//    MARK: - Get Shops For User
+    
+    func getShopsConnectedUser(user: UserModel) -> SignalProducer <Array<ShopModel>, NSError> {
+        
+        return getShops(connectedToUser: true, user: user)
+    }
+    
+    func getShopsNotConnectedToUser(user: UserModel) -> SignalProducer <Array<ShopModel>, NSError> {
+        
+        return getShops(connectedToUser: false, user: user)
+    }
+    
+    private func getShops(connectedToUser isConnected:Bool, user: UserModel) -> SignalProducer <Array<ShopModel>, NSError> {
+        
+        return SignalProducer { (sink, disposable) -> () in
+            self.ref.child(Constants.Shops)
+                .observe(FIRDataEventType.value,
+                         with: { (snapshot) in
+                            var shopsModels = [ShopModel]()
+                            let ownShopsList = user.shopsList ?? [ShopModel]()
+                            
+                            for list in snapshot.children {
+                                let shop = ShopModel.init(snapshot: list as! FIRDataSnapshot)
+                                
+                                var isContain = false
+                                for ownShop in ownShopsList {
+                                    if shop.identifier == ownShop.identifier {
+                                        isContain = true
+                                    }
+                                }
+                                
+                                switch (isContain, isConnected) {
+                                case (true, true): shopsModels.append(shop)
+                                case (false, false): shopsModels.append(shop)
+                                default: break
+                                }
+                            }
+                            
+                            sink.send(value: shopsModels)
+                            //                sink.sendCompleted()
+                })
+        }
+    }
+
+//    MARK: - Create Shop
+    
     func createNewShopName(_ name: String, lastVisitDate: Date, lat: Float, lon: Float, planFrequency: Int, completionHandler: @escaping (_ isSuccess: Bool) ->()) {
         let newShop : [String : Any] = [Constants.Shop.Name  : name as AnyObject,
                                               Constants.Shop.LastVisitDate : Converter.sringFromDate(lastVisitDate) as AnyObject,
